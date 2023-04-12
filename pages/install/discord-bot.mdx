@@ -1,0 +1,37 @@
+import Image from 'next/image'
+import { Callout } from 'nextra-theme-docs'
+
+# Create a Discord Server and Bot
+
+Follow these steps to create a discord server, invite `Midjourney bot` to it and create your own bot. These are required for ImagineAPI.
+
+## Create a Discord server
+
+<Callout>
+If you already have a Discord server where you have invited `Midjourney Bot` you don't need to skip this part.
+</Callout>
+
+1. Create a Discord server: <Image src="/CleanShot 2023-04-11 at 15.58.07@2x.png" width={800} height={500} />
+1. Name it whatever you would like.
+1. Let's now invite `Midjourney Bot` into your new server.
+1. Go to the `Midjourney` server and click on `Midjourney Bot`: <Image src="/CleanShot 2023-04-11 at 16.01.58@2x.png" width={800} height={500} />
+1. Click `Add to Server`: <Image src="/CleanShot 2023-04-11 at 16.03.44@2x.png" width={800} height={500} />
+1. Select the Server you just created to add Midjourney Bot to it: <Image src="/CleanShot 2023-04-11 at 16.05.35@2x.png" width={800} height={500} />
+1. Click `Authorize`: <Image src="/CleanShot 2023-04-11 at 16.07.04@2x.png" width={800} height={500} />
+
+
+## Create a Discord Bot
+
+1. Go to https://discord.com/developers/applications
+1. Create a new application (give it a random name..it doesn't matter) <Image src="/CleanShot 2023-04-11 at 15.33.02@2x.png" width={800} height={500} />
+1. In the `OAuth2 > General` page, select `In-App Authorization` for the Authorization Method and select `bot` in Scopes: <Image src="/CleanShot 2023-04-11 at 15.37.38@2x.png" width={800} height={500} />
+1. Then scroll down into permissions and select: `Read Messages/View Channels`, `Use Slash Commands`, and `Send Messages`: <Image src="/CleanShot 2023-04-11 at 15.37.26@2x.png" width={800} height={500} />
+1. Don't forget to `Save Changes`.
+1. Go to `OAuth2 > URL Generator` page, select `bot` under Scopes: <Image src="/CleanShot 2023-04-11 at 16.24.00@2x.png" width={800} height={500} />
+1. Then select `Read Messages/View Channels`, `Use Slash Commands`, and `Send Messages` under `Bot Permissions`: <Image src="/CleanShot 2023-04-11 at 16.24.25@2x.png" width={800} height={500} />
+1. Click Copy to get the URL and go to that URL: <Image src="/CleanShot 2023-04-11 at 16.28.59@2x.png" width={800} height={500} />
+1. Under `Add to Server` select your [newly created server](#create-a-discord-bot): <Image src="/CleanShot 2023-04-11 at 16.28.59@2x.png" width={800} height={500} />
+1. Authorize the permissions: <Image src="/CleanShot 2023-04-11 at 16.30.07@2x.png" width={800} height={500} />
+1. Go back to the Discord Developer Portal and go to the Bot page and click `Add Bot`
+1. Then copy the Token: <Image src="/CleanShot 2023-04-11 at 15.38.12@2x.png" width={800} height={500} />
+1. Keep this token around as you will need it soon.

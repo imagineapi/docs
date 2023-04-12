@@ -1,15 +1,16 @@
 {
   "index": "Introduction",
-  "another": "Another Page",
-  "advanced": "Advanced (A Folder)",
-  "about": {
-    "title": "About",
-    "type": "page"
+  "install": "Install",
+  "API": "API",
+  "home": {
+    "title": "Buy 🛍",
+    "type": "page",
+    "href": "https://www.imagineapi.dev"
   },
   "contact": {
     "title": "Contact ↗",
     "type": "page",
-    "href": "https://twitter.com/shuding_",
+    "href": "https://twitter.com/HappyGezim",
     "newWindow": true
   }
 }

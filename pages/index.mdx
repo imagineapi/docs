@@ -1,11 +1,89 @@
+import { Callout } from 'nextra-theme-docs'
+import Image from 'next/image'
+ 
+
 # Introduction
  
-Welcome to Nextra! This is a basic docs template. You can use it as a starting point for your own project :)
+Welcome to ImagineAPI — the unofficial Midjourney API — docs
 
-## What is Nextra?
+Here you will find documentation on how to get started and use Midjourney to generate stunning images for you or your customers!
 
-A **simple**, **powerful** and **flexible** site generation framework with everything you love from Next.js.
+<Callout emoji="💰">
+This is not a free or open source project. A paid license is required. Please go to [ImagineAPI](https://www.imagineapi.dev) to purchase if you have not already done so.
+</Callout>
 
-## Documentation
 
-The documentation is available at [https://nextra.site](https://nextra.site).
+## What is ImagineAPI?
+
+An **unofficial** REST API for Midjourney. You can programmatically generate images using any programming language and standard REST methods like `GET` and `POST`.
+
+<Image src="/b36e9627-c3de-4f25-82c5-196b4859494b.png" alt="steampunk city with airship in background zoomed out to fit everything in shot stormy sky:: --ar 2:1 --v 4 --quality 2 --v 5 --s 50" width={850} height={500} />
+
+You can use it to create any thing you can imagine — from your next startup to a simple bot for your friends and family.
+
+Here's a quick Python example to generate the above image:
+
+```py filename="main.py"
+import requests
+import consts # this has the API key and URL
+
+# Define the prompt to send to Midjourney 
+data = {'prompt': 'oil spill flamingo'}
+
+# Send the POST request
+response = requests.post(consts.base_url+"/images", json=data, headers=consts.auth)
+
+# Print the response status code and content
+print('Status code:', response.status_code)
+print('Response content:', response.content)
+```
+
+We then run that prompt:
+
+```sh
+$ python3 main.py
+Status code: 200
+Response content: b'{"data":{"id":"53acbdf5-9d71-4ea3-89bd-23f67571340f","prompt":"steampunk city with airship in background zoomed out to fit everything in shot stormy sky:: --ar 2:1 --v 4 --quality 2 --v 5 --s 50","results":null,"user_created":"415a442b-9ece-4974-a80f-84e4856295d6","date_created":"2023-04-11T20:26:15.198Z","status":"pending","progress":null,"url":null,"error":null}}'
+```
+
+We then check the results as they progress (31%):
+
+```sh
+$ curl -H "Authorization: $API_TOKEN" "http://localhost:8055/items/images/53acbdf5-9d71-4ea3-89bd-23f67571340f"
+{
+    "data": {
+        "id": "53acbdf5-9d71-4ea3-89bd-23f67571340f",
+        "prompt": "steampunk city with airship in background zoomed out to fit everything in shot stormy sky:: --ar 2:1 --v 4 --quality 2 --v 5 --s 50",
+        "results": null,
+        "user_created": "415a442b-9ece-4974-a80f-84e4856295d6",
+        "date_created": "2023-04-11T20:26:15.198Z",
+        "status": "in-progress", <------------- status
+        "progress": 31, <------------- progress 
+        "url": null,
+        "error": null
+    }
+}
+```
+
+We check again after a bit and it's done:
+
+```sh
+$ curl -H "Authorization: $API_TOKEN" "http://localhost:8055/items/images/53acbdf5-9d71-4ea3-89bd-23f67571340f"
+{
+    "data": {
+        "id": "53acbdf5-9d71-4ea3-89bd-23f67571340f",
+        "prompt": "steampunk city with airship in background zoomed out to fit everything in shot stormy sky:: --ar 2:1 --v 4 --quality 2 --v 5 --s 50",
+        "results": "b36e9627-c3de-4f25-82c5-196b4859494b",
+        "user_created": "415a442b-9ece-4974-a80f-84e4856295d6",
+        "date_created": "2023-04-11T20:26:15.198Z",
+        "status": "completed", <------------- progress
+        "progress": null,
+ -----> "url": "http://localhost:8055/assets/b36e9627-c3de-4f25-82c5-196b4859494b/b36e9627-c3de-4f25-82c5-196b4859494b.png",
+        "error": null
+    }
+}
+```
+
+The final results of this prompt are at the top!
+
+### If you have already paid for a license, [setup ImagineAPI on your server](/setup). If you have not bought a license yet, [go for it](https://www.imagineapi.dev)!

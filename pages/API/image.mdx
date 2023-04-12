@@ -1,0 +1,49 @@
+# Image
+
+All methods required to provide an [authorization token](/API/authentication).
+
+## `GET /items/images/:id`
+
+Returns: 
+
+```json
+{
+    "data": {
+        "id": UUID,
+        "prompt": string,
+        "results": null | string,
+        "user_created": string,
+        "date_created": string,
+        "status": "pending" | "in-progress" | "completed" | "failed"
+        "progress": number | null, 
+        "url": null | string,
+        "error": null | string
+    }
+}
+```
+
+## `POST /items/images`
+
+Body: 
+
+```
+{"prompt": string}
+```
+
+Returns:
+
+```json
+{
+    "data": {
+        "id": UUID,
+        "prompt": string,
+        "results": null | string,
+        "user_created": string,
+        "date_created": string,
+        "status": "pending" | "in-progress" | "completed" | "failed"
+        "progress": number | null, 
+        "url": null | string,
+        "error": null | string
+    }
+}
+```
