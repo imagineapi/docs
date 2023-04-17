@@ -1,0 +1,24 @@
+# Upgrading ImagineAPI
+
+To get the latest version of ImagineAPI run:
+
+```sh copy
+docker-compose pull
+```
+
+You'll see the Docker images that have updates get downloaded:
+
+```
+$ docker-compose pull
+Pulling database ... done
+Pulling rabbitmq ... done
+Pulling api      ... done
+Pulling bot      ... done
+Pulling autoheal ... done
+```
+
+Then start the containers that got updates:
+
+```sh copy
+docker-compose up -d
+```

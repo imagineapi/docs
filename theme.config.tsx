@@ -22,7 +22,6 @@ const config: DocsThemeConfig = {
   head: (
     <>
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@HappyGezim" />
       <meta name="twitter:image" content="https://docs.imagineapi.dev/social.png" />
     </>
   ),
