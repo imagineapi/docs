@@ -3,6 +3,7 @@
   "install": "Install",
   "API": "API",
   "upgrade": "Upgrade",
+  "troubleshooting": "Troubleshooting",
   "home": {
     "title": "Buy 🛍",
     "type": "page",
