@@ -1,0 +1,29 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Status
+
+All methods required to provide an [authorization token](/API/authentication).
+
+## `GET /items/status`
+
+You can check the ImagineAPI status using this endpoint. Requests you send when `bot_status` is not `healthy` will be queued and they will run once the bot becomes healthy and starts accepting requests again. 
+
+Returns: 
+
+```json
+{
+    "data": {
+		"bot_status": "healthy" | "unhealthy" | "starting" | "paused" ,
+		"date_created": "2023-04-05T15:47:43.573Z",
+		"date_updated": "2023-04-26T05:33:17.683Z",
+		"id": 1,
+		"message": null,
+		"user_created": null,
+		"user_updated": null
+	}
+}
+```
+
+<Callout type="warning">
+If the bot *is processing requests without issue* and `bot_status` is showing `unhealthy`, please [send a support request with the logs](/troubleshooting).
+</Callout>
