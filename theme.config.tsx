@@ -5,7 +5,7 @@ import { useConfig } from 'nextra-theme-docs'
 
 
 const config: DocsThemeConfig = {
-  logo: <Image src="/logo-white.svg" alt="ImagineAPI" width={80} height={80} />,
+  logo: <Image src="/logo-with-text.svg" alt="ImagineAPI" width={200} height={40} />,
   logoLink: 'https://www.imagineapi.dev',
   chat: {
     link: 'https://discord.gg/AWeASBr8',
