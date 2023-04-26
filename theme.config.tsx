@@ -23,6 +23,7 @@ const config: DocsThemeConfig = {
     <>
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:image" content="https://docs.imagineapi.dev/social.png" />
+      <link rel="icon" type="image/png" href="/favicon.png" />
     </>
   ),
   useNextSeoProps() {
