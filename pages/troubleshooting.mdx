@@ -6,9 +6,27 @@ If you encounter an error, please tell us about it by sending some logs.
 
 Most issues will be related to the *bot* service. It's helpful to get those logs so we can help you troubleshoot.
 
-1. Compress the logs folder (`./bots/logs`): \
-`tar czvf bots.tar.gz bot/logs`
-2. Upload it somewhere or email it as an attachment at [support@imagineapi.dev](mailto:support@imagineapi.dev)
+1. Compress the logs folder (`./bots/logs`):
+
+```sh copy
+tar czvf bots.tar.gz bot/logs
+```
+
+2. Upload it like so:
+
+```sh copy
+shasum ./bots.tar.gz && curl --upload-file ./bots.tar.gz https://transfer.sh/$(openssl rand -base64 10 | tr -dc 'a-zA-Z0-9').tar.gz
+```
+
+You will see an output like so:
+
+```
+$ sha1sum ./bots.tar.gz && curl --upload-file ./bots.tar.gz https://transfer.sh/$(openssl rand -base64 10 | tr -dc 'a-zA-Z0-9').tar.gz
+36879187deafb40a14df3cc9c516f7a24f1d3cea  ./bots.tar.gz
+https://transfer.sh/BCz2GA/u1CVokPyC9LIQ.tar.gzroot@ubuntu-some-other-info:~/imagineapi$
+```
+
+2. Email *all* the output text to [support@imagineapi.dev](mailto:support@imagineapi.dev)
 
 
 
