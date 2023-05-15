@@ -1,10 +1,21 @@
+import { Steps, Callout } from 'nextra-theme-docs'
+
 # Upgrading ImagineAPI
 
+<Steps>
+
+### Get the latest code from Github
 To get the latest version of ImagineAPI.dev run:
 
 ```sh copy
 git pull
 ```
+
+<Callout>
+`git pull` most often will not contain any changes. Continue with the rest of the update steps either way.
+</Callout>
+
+### Get Docker image updates
 
 To get the latest `docker-compose.yml` and related files.
 
@@ -25,8 +36,12 @@ Pulling bot      ... done
 Pulling autoheal ... done
 ```
 
+### Re-create Docker containers using new images
+
 Then start the containers that got updates:
 
 ```sh copy
 docker-compose up -d
 ```
+
+</Steps>
