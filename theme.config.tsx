@@ -8,7 +8,7 @@ const config: DocsThemeConfig = {
   logo: <Image src="/logo-with-text.svg" alt="ImagineAPI" width={200} height={40} />,
   logoLink: 'https://www.imagineapi.dev',
   footer: {
-    text: 'ImagineAPI Documentation',
+    text: 'ImagineAPI.dev Documentation',
   },
   nextThemes: {
     defaultTheme: 'dark',
@@ -35,7 +35,7 @@ const config: DocsThemeConfig = {
           { url: frontMatter.image || 'https://docs.imagineapi.dev/social.png' }
         ]
       },
-      titleTemplate: '%s – ImagineAPI Documentation',
+      titleTemplate: '%s – ImagineAPI.dev Documentation',
       twitter: {
         cardType: 'summary_large_image',
         site: 'https://docs.imagineapi.dev'

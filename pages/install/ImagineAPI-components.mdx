@@ -6,13 +6,13 @@ import { Callout } from 'nextra-theme-docs'
 
 ## Architecture
 
-Without getting into too many details, ImagineAPI has 3 separate services and a database to store data:
+Without getting into too many details, ImagineAPI.dev has 3 separate services and a database to store data:
 
 - **API**: This manages requests you make to the API, the API key and this is where the final image is saved after it's generated
 - **RabbitMQ**: This is a queue service that holds all prompts requests when you want to generate an image. You can request multiple images to be generated and those requests are kept in the RabbitMQ queue.
 - **Bot**: The bot interacts with Midjourney and generates images.
 
-<Image src="/ImagineAPI Architecture.png" width={800} height={500} />
+<Image src="/ImagineAPI.dev Architecture.png" width={800} height={500} />
 
 ## Clone The Github Repo
 
@@ -93,7 +93,7 @@ RABBITMQ_DEFAULT_PASS=same as above
 
 - This the username and password you will use to log into ImagineAPI
 ```
-STANDARD_USER_EMAIL=email you will use to log into ImagineAPI user interface
+STANDARD_USER_EMAIL=email you will use to log into ImagineAPI.dev user interface
 STANDARD_USER_PASSWORD=password for the same
 ```
 
@@ -110,9 +110,9 @@ KEY=Set a random UUID string
 SECRET=Set a random UUID string (it should be different from KEY)
 ```
 
-- This is the URL you will have to use for ImagineAPI in the `GET`, `POST` requests. By default, the port is `8055` however you can forward traffic to this port and set `PUBLIC_URL` to that:
+- This is the URL you will have to use for ImagineAPI.dev in the `GET`, `POST` requests. By default, the port is `8055` however you can forward traffic to this port and set `PUBLIC_URL` to that:
 ```
-PUBLIC_URL=ImagineAPI url or the URL to your server. Example: http://mj.yellow-lemon.ts.net:8055
+PUBLIC_URL=ImagineAPI.dev url or the URL to your server. Example: http://mj.yellow-lemon.ts.net:8055
 ```
 
 
