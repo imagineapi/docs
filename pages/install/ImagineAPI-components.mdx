@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Callout } from 'nextra-theme-docs'
+import { Callout, Steps } from 'nextra-theme-docs'
 
 
 # Installing ImagineAPI
@@ -14,7 +14,11 @@ Without getting into too many details, ImagineAPI.dev has 3 separate services an
 
 <Image src="/ImagineAPI Architecture.png" width={800} height={500} />
 
-## Clone The Github Repo
+## Installation Steps
+
+<Steps>
+
+### Clone The Github Repo
 
 Inside a terminal or shell window, clone https://github.com/imagineapi/imagineapi:  
 
@@ -41,7 +45,7 @@ drwxrwxr-x 2 ubuntu ubuntu 4096 Apr 12 05:28 postgres
 drwxrwxr-x 2 ubuntu ubuntu 4096 Apr 12 05:28 rabbitmq
 ```
 
-## Update `.shared.env`
+### Update `.shared.env`
 
 Copy `.shared.env-example` into `.shared.env`:
 
@@ -49,13 +53,11 @@ Copy `.shared.env-example` into `.shared.env`:
 cp .shared.env-example .shared.env
 ```
 
-### Values explained
-
 Edit `.shared.env`:
 
 Some of these values are duplicated so make sure you're careful. Obviously keep these a secret.
 
----
+#### Values explained
 
 - These two are the same and you can enter a random string. 
 ```
@@ -80,7 +82,6 @@ DISCORD_PASSWORD=your discord password
 DISCORD_SERVER_ID=your discord server id
 DISCORD_BOT_TOKEN=your discord bot token which you have added to the server above
 ```
-
 
 - These can be set to a username and password for RabbitMQ. You have to repeat the username and password.
 
@@ -122,7 +123,7 @@ PUBLIC_URL=ImagineAPI.dev url or the URL to your server. Example: http://mj.yell
 # LOGTAIL_SOURCE_TOKEN=This is optional if you want logs sent to logtail.com, set your source token here and uncomment it
 ```
 
-### Example `.shared.env`
+#### Example `.shared.env`
 
 Here's a completed example (dummy values):
 
@@ -159,7 +160,7 @@ PUBLIC_URL=https://mj.yellow-lemon.ts.net:8055
 # LOGTAIL_SOURCE_TOKEN=This is optional if you want logs sent to logtail.com, set your source token here and uncomment it
 ```
 
-## Run `docker-compose`
+### Run `docker-compose`
 
 Once you've entered the values in `.shared.env`, we run `docker-compose up -d`.
 
@@ -202,7 +203,7 @@ imagineapi_rabbitmq_1   docker-entrypoint.sh rabbi ...   Up (healthy)   15671/tc
                                                                         25672/tcp, 4369/tcp, 5671/tcp, 5672/tcp
 ```
 
-## Monitor Bot Status:
+### Monitor Bot Status:
 
 It should take a few minutes for all the services to become healthy. Once they do you can log into the API using the PUBLIC_URL you set in `.shared.env`:
 
@@ -212,7 +213,7 @@ Then you can click on Status:
 
 <Image src="/CleanShot 2023-04-12 at 00.54.37.png" width={800} height={500} />
 
-## Verify Discord Login Link
+### Verify Discord Login Link
 
 After a while, the bot will go into `Paused` mode (keep refreshing to see updates):
 
@@ -220,7 +221,7 @@ After a while, the bot will go into `Paused` mode (keep refreshing to see update
 
 At this point you will receive Discord email with a login link.
 
-### Send email link to RabbitMQ
+#### Send email link to RabbitMQ
 
 You will need to navigate to port `15672` for your server (make sure it's open). In our example: `http://ec2-28-226-218-224.compute-1.amazonaws.com:15672` (note it's `http`):
 
@@ -246,7 +247,7 @@ Shortly, you should see the bot status become healthy again:
 
 <Image src="/CleanShot 2023-04-12 at 01.00.00.png" width={800} height={500} />
 
-## Generate your first image 🎉
+### Generate your first image 🎉
 
 Create a new image using a prompt:
 
@@ -256,4 +257,4 @@ After around 30 seconds you'll see the results (might need to refresh the page):
 
 <Image src="/CleanShot 2023-04-12 at 01.24.22.png" width={800} height={500} />
 
-
+</Steps>
