@@ -5,9 +5,14 @@
   "upgrade": "Upgrade",
   "troubleshooting": "Troubleshooting",
   "home": {
-    "title": "Buy 🛍",
+    "title": "Home",
     "type": "page",
     "href": "https://www.imagineapi.dev"
+  },
+  "changelog": {
+    "title": "Changelog",
+    "type": "page",
+    "href": "https://www.imagineapi.dev/changelog"
   },
   "contact": {
     "title": "Contact ↗",
