@@ -1,0 +1,257 @@
+import Image from 'next/image'
+import { Callout, Steps } from 'nextra-theme-docs'
+
+# 安装 ImagineAPI
+
+## 架构
+
+在不涉及太多细节的情况下，ImagineAPI.dev有3个独立的服务和一个数据库来存储数据：
+
+- **API**：这个用来管理您向API发送的请求、API密钥，以及在生成图像后最终保存的图像
+- **RabbitMQ**：这是一个队列服务，用来保存生成图像时的所有提示请求。您可以请求生成多个图像，这些请求会被保留在RabbitMQ队列中。
+- **Bot**：Bot 与 Midjourney 互动并生成图像。
+
+<Image src="/ImagineAPI Architecture.png" width={800} height={500} />
+
+## 安装步骤
+
+<Steps>
+
+### 克隆Github仓库
+
+在终端或shell窗口中，克隆 https://github.com/imagineapi/imagineapi:
+
+```sh copy
+git clone git@github.com:imagineapi/imagineapi.git
+```
+
+您应该可以看到 `docker-compose.yml` 和 `.shared.env-example`：
+
+```
+$ ls -la
+total 48
+drwxrwxr-x 8 ubuntu ubuntu 4096 Apr 12 05:28 .
+drwxr-x--- 5 ubuntu ubuntu 4096 Apr 12 05:28 ..
+drwxrwxr-x 8 ubuntu ubuntu 4096 Apr 12 05:28 .git
+-rw-rw-r-- 1 ubuntu ubuntu  269 Apr 12 05:28 .gitignore
+-rw-rw-r-- 1 ubuntu ubuntu 1022 Apr 12 05:28 .shared.env-example
+-rw-rw-r-- 1 ubuntu ubuntu  447 Apr 12 05:28 README.md
+drwxrwxr-x 2 ubuntu ubuntu 4096 Apr 12 05:28 api
+drwxrwxr-x 2 ubuntu ubuntu 4096 Apr 12 05:28 bin
+drwxrwxr-x 2 ubuntu ubuntu 4096 Apr 12 05:28 bot
+-rw-rw-r-- 1 ubuntu ubuntu 2310 Apr 12 05:28 docker-compose.yml
+drwxrwxr-x 2 ubuntu ubuntu 4096 Apr 12 05:28 postgres
+drwxrwxr-x 2 ubuntu ubuntu 4096 Apr 12 05:28 rabbitmq
+```
+
+### 更新 `.shared.env`
+
+将 `.shared.env-example` 复制到 `.shared.env`:
+
+```sh copy
+cp .shared.env-example .shared.env
+```
+
+编辑 `.shared.env`:
+
+这些值有些是重复的，所以请务必小心。显然，要保密这些值。
+
+#### 值解释
+
+- 这两个值是相同的，您可以输入一个随机字符串。
+```
+API_TOKEN=输入一个随机字符串（8-20个字符）
+BOT_TOKEN=与API_TOKEN相同
+```
+
+- 这是一个API密钥。我们可能会为您提供这个，如果您没有获得一个，请告诉我们：
+```
+TWO_CAPTCHA_API_KEY=两步验证服务的 API 密钥
+```
+
+<Callout>确保您已关闭 Discord 账户的两步验证。</Callout>
+
+- `DISCORD_EMAIL` 和 `DISCORD_PASSWORD` 是您的Discord用户名和密码
+- `DISCORD_SERVER_ID` 是您在 [discord步骤](/install/discord-bot#create-a-discord-server) 中创建的服务器
+- `DISCORD_BOT_TOKEN` 是 [discord bot创建步骤](/install/discord-bot#create-a-discord-bot) 中的token
+
+```
+DISCORD_EMAIL=您的Discord邮箱
+DISCORD_PASSWORD=您的Discord密码
+DISCORD_SERVER_ID=您的 Discord 服务器 ID
+DISCORD_BOT_TOKEN=您已添加到上述服务器的 Discord bot token
+```
+
+- 这些可以设置为 RabbitMQ 的用户名和密码。您需要重复输入用户名和密码。
+
+```
+RABBITMQ_USER=设置一个RabbitMQ的用户名
+RABBITMQ_DEFAULT_USER=与上面相同
+RABBITMQ_PASSWORD=设置一个RabbitMQ的密码
+RABBITMQ_DEFAULT_PASS=与上面相同
+```
+
+- 这是您登录ImagineAPI时使用的用户名和密码:
+```
+STANDARD_USER_EMAIL=您将用于登录 ImagineAPI.dev 用户界面的电子邮件
+STANDARD_USER_PASSWORD=同样的密码
+```
+
+- 您的数据库密码：
+```
+DB_PASSWORD=为您的数据库设置一个密码
+POSTGRES_PASSWORD=与上面相同
+```
+
+- 几个随机值。不要让它们相同：
+```
+KEY=设置一个随机的 UUID 字符串
+SECRET=设置另一个随机的 UUID 字符串（与 KEY 不同）
+```
+
+- 这是在 `GET`、`POST` 请求中使用 ImagineAPI.dev 的 URL。默认端口是 `8055`，但是您可以将流量转发到这个端口，然后设置 `PUBLIC_URL`：
+```
+PUBLIC_URL=ImagineAPI.dev URL 或者您的服务器的 URL。例如：http://mj.yellow-lemon.ts.net:8055
+```
+
+- 这是可选的。您可以将日志转发到 [logtail.com](https://logtail.com)，这样可以方便地查看日志并进行故障排除。
+```
+# 可选
+# LOGTAIL_SOURCE_TOKEN=这是可选的，如果您希望将日志发送到 logtail.com，请在此处设置您的源令牌并取消注释。
+```
+
+#### 示例 `.shared.env`
+
+这是一个已完成的示例 (虚拟值)：
+
+<Callout>您可以使用这些值，但不要只是复制它们。</Callout>
+
+```env
+API_TOKEN=70e55d52-ab08-4f9b-ac0d-8c14bf432b9f
+BOT_TOKEN=70e55d52-ab08-4f9b-ac0d-8c14bf432b9f
+
+TWO_CAPTCHA_API_KEY=42341e63a823ae375e6bef411db7ce85
+
+DISCORD_EMAIL=gezim@example.com
+DISCORD_PASSWORD=ITabeNtIOlEYBOyCLo
+DISCORD_SERVER_ID=1095178629845312359
+DISCORD_BOT_TOKEN=MTA19ds19DsFNDU0NjAwOTE4OQ.8Gc180.3J_RZ9NcXZqikZbmvcjlD6QdOzZL6SU3KnLTuIY
+
+RABBITMQ_USER=imagineapi
+RABBITMQ_DEFAULT_USER=imagineapi
+RABBITMQ_PASSWORD=yAwNstAvIShanZIanc
+RABBITMQ_DEFAULT_PASS=yAwNstAvIShanZIanc
+
+STANDARD_USER_EMAIL=gezim@example.com
+STANDARD_USER_PASSWORD=nudleaLosiTeRhYdre
+
+DB_PASSWORD=DALboDIoNtatcHAwat
+POSTGRES_PASSWORD=DALboDIoNtatcHAwat
+
+KEY=912a2095-bf1a-4acc-819a-5feeaa7320ae
+SECRET=223a2843-1d38-4ca1-9e9c-7ae7fb5eb18c
+
+PUBLIC_URL=https://mj.yellow-lemon.ts.net:8055
+
+# 可选项
+# LOGTAIL_SOURCE_TOKEN=这是可选的，如果您希望将日志发送到 logtail.com，请在此处设置您的源令牌并取消注释。
+```
+
+### 运行 `docker-compose`
+
+在 `.shared.env` 中输入值后，我们运行 `docker-compose up -d`。
+
+这将下载 Docker 镜像并启动所需的容器：
+
+```sh
+$ docker-compose up -d
+Creating network "imagineapi_default" with the default driver
+Creating volume "imagineapi_api" with default driver
+Creating volume "imagineapi_rabbitmq" with default driver
+Creating volume "imagineapi_database" with default driver
+Pulling database (imagineapi/imagineapi-postgres:0.2)...
+0.2: Pulling from imagineapi/imagineapi-postgres
+f1f26f570256: Pull complete
+1c04f8741265: Pull complete
+dffc353b86eb: Pull complete
+18c4a9e6c414: Pull complete
+81f47e7b3852: Pull complete
+5e26c947960d: Pull complete
+a2c3dc85e8c3: Pull complete
+17df73636f01: Pull complete
+713535cdf17c: Extracting [===============>                                   ]  28.97MB/92.23MB
+52278a39eea2: Download complete
+4ded87da67f6: Download complete
+05fae4678312: Download complete
+56b4f4aeea2d: Download complete
+```
+
+您可以使用 `docker-compose ps` 查看容器的状态：
+
+```
+$ docker-compose ps
+        Name                       Command                  State                                  Ports
+------------------------------------------------------------------------------------------------------------------------------------
+api                     docker-entrypoint.sh /bin/ ...   Up             0.0.0.0:8055->8055/tcp,:::8055->8055/tcp
+autoheal                /docker-entrypoint autoheal      Up (healthy)
+bot                     node dist/consumer.js            Up (healthy)
+database                docker-entrypoint.sh postgres    Up             5432/tcp
+imagineapi_rabbitmq_1   docker-entrypoint.sh rabbi ...   Up (healthy)   15671/tcp, 0.0.0.0:15672->15672/tcp,:::15672->15672/tcp,
+                                                                        25672/tcp, 4369/tcp, 5671/tcp, 5672/tcp
+```
+
+### 监控 Bot 状态：
+
+所有服务正常所需的时间可能需要几分钟。一旦它们正常，您可以使用 `.shared.env` 中设置的 PUBLIC_URL 登录API:
+
+在我们的 AWS EC2 上使用端口 8055 打开示例: `http://ec2-28-226-218-224.compute-1.amazonaws.com:8055` (注意这只是 `http`)
+
+然后点击查看状态：
+
+<Image src="/CleanShot 2023-04-12 at 00.54.37.png" width={800} height={500} />
+
+### 验证 Discord 登录链接
+
+过一段时间，bot будет进入 `Paused` 模式 (不断刷新以查看更新 )：
+
+<Image src="/CleanShot 2023-04-12 at 00.56.49.png" width={800} height={500} />
+
+此时，您将收到带有登录链接的Discord邮件。
+
+#### 将邮件链接发送到 RabbitMQ
+
+您需要导航到您的服务器的端口 `15672` (确保它是打开的)。在我们的例子中：`http://ec2-28-226-218-224.compute-1.amazonaws.com:15672` (注意这是 `http`):
+
+您将看到 RabbitMQ 登录页面：
+
+<Image src="/CleanShot 2023-04-12 at 01.09.36.png" width={800} height={500} />
+
+使用 `.shared.env` 中设置的 RabbitMQ 用户名和密码登录。
+
+然后点击 `Queues` 和 `verify-email` 队列：
+
+<Image src="/CleanShot 2023-04-12 at 00.58.22.png" width={800} height={500} />
+
+现在，复制你的邮件链接（不要点击链接）：
+
+<Image src="/CleanShot 2023-04-12 at 00.58.59.png" width={800} height={500} />
+
+并将其粘贴到 RabbitMQ 中的消息中，然后点击 `Publish`：
+
+<Image src="/CleanShot 2023-04-12 at 00.59.17.png" width={800} height={500} />
+
+不久后，您应该看到 bot 状态恢复正常：
+
+<Image src="/CleanShot 2023-04-12 at 01.00.00.png" width={800} height={500} />
+
+### 生成您的第一张图片 🎉
+
+使用一个提示创建一张新的图片：
+
+<Image src="/CleanShot 2023-04-12 at 01.16.34.png" width={800} height={500} />
+
+大约30秒后你会看到结果（可能需要刷新页面）：
+
+<Image src="/CleanShot 2023-04-12 at 01.24.22.png" width={800} height={500} />
+
+</Steps>

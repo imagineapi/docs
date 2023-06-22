@@ -1,0 +1,29 @@
+import { Callout } from 'nextra-theme-docs'
+
+# 状态
+
+所有方法都需要提供一个[验证令牌](/API/authentication)。
+
+## `GET /items/status`
+
+您可以通过此端点检查 ImagineAPI.dev 的状态。当 `bot_status` 不是 `healthy` 时，您发送的请求将排队等待，当机器人恢复健康并重新接受请求时，它们将开始运行。
+
+返回：
+
+```json
+{
+    "data": {
+		"bot_status": "healthy" | "unhealthy" | "starting" | "paused" ,
+		"date_created": "2023-04-05T15:47:43.573Z",
+		"date_updated": "2023-04-26T05:33:17.683Z",
+		"id": 1,
+		"message": null,
+		"user_created": null,
+		"user_updated": null
+	}
+}
+```
+
+<Callout type="warning">
+如果机器人*正在无问题地处理请求*，而 `bot_status` 显示为 `unhealthy`，请[发送支持请求并附上日志](/troubleshooting)。
+</Callout>

@@ -1,0 +1,23 @@
+{
+  "index": "简介",
+  "install": "安装",
+  "API": "API",
+  "upgrade": "升级",
+  "troubleshooting": "故障排查",
+  "home": {
+    "title": "首页",
+    "type": "page",
+    "href": "https://www.imagineapi.dev"
+  },
+  "changelog": {
+    "title": "更新日志",
+    "type": "page",
+    "href": "https://www.imagineapi.dev/changelog"
+  },
+  "contact": {
+    "title": "联系我们 ↗",
+    "type": "page",
+    "href": "https://www.imagineapi.dev/contact",
+    "newWindow": true
+  }
+}

@@ -1,0 +1,34 @@
+import Image from 'next/image'
+import { Callout, Steps } from 'nextra-theme-docs'
+
+# 创建一个 Discord 服务器和机器人
+
+按照以下步骤创建一个 Discord 服务器，邀请 `Midjourney bot`，并创建您自己的机器人。这些是 ImagineAPI 所需的。
+
+## 创建一个 Discord 服务器
+
+<Callout>
+如果您已经有一个已经邀请了 `Midjourney Bot` 的 Discord 服务器，您可以跳过这一部分。
+</Callout>
+
+1. 创建一个 Discord 服务器：<Image src="/CleanShot 2023-04-11 at 15.58.07@2x.png" width={800} height={500} />
+1. 随意起一个名字。
+1. 现在让我们邀请 `Midjourney Bot` 加入您的新服务器。
+1. 转到 `Midjourney` 服务器，然后点击 `Midjourney Bot`：<Image src="/CleanShot 2023-04-11 at 16.01.58@2x.png" width={800} height={500} />
+1. 点击 `Add to Server`：<Image src="/CleanShot 2023-04-11 at 16.03.44@2x.png" width={800} height={500} />
+1. 选择刚刚创建的服务器将 Midjourney Bot 添加到其中：<Image src="/CleanShot 2023-04-11 at 16.05.35@2x.png" width={800} height={500} />
+1. 点击 `Authorize`：<Image src="/CleanShot 2023-04-11 at 16.07.04@2x.png" width={800} height={500} />
+
+## 创建一个 Discord 机器人
+
+1. 访问 https://discord.com/developers/applications
+1. 创建一个新的应用程序（给它取一个随机名称...无关紧要）<Image src="/CleanShot 2023-05-03 at 14.24.26@2x.png" width={800} height={500} />
+1. 转到 `OAuth2 > URL Generator` 页面，在 Scopes 下选择 `bot`。<br />然后在 `Bot Permissions` 下选择 `Manage Channels`、`Read Messages/View Channels`、`Use Slash Commands` 和 `Send Messages`：<Image src="/CleanShot 2023-05-03 at 14.26.04@2x.png" width={800} height={500} />
+1. 点击复制以获取 URL 并转到该 URL。
+1. 在 `Add to Server` 下选择您[新创建的服务器](#create-a-discord-bot)：<Image src="/CleanShot 2023-05-03 at 14.52.03@2x.png" width={800} height={500} />
+1. 授权权限：<Image src="/CleanShot 2023-05-03 at 14.51.29@2x.png" width={800} height={500} />
+1. 返回到 Discord 开发者门户，转到 Bot 页面，然后点击 `Add Bot`。
+1. 打开 `Message Content Intent`：<Image src="/CleanShot 2023-04-12 at 02.30.01.png" width={800} height={500} />
+1. 保存更改。
+1. 之后复制 Token: <Image src="/CleanShot 2023-04-11 at 15.38.12@2x.png" width={800} height={500} />
+1. 将此 Token 保存起来，因为您很快会需要它。
