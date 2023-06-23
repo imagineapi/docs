@@ -12,23 +12,7 @@ Most issues will be related to the *bot* service. It's helpful to get those logs
 tar czvf bots.tar.gz bot/logs
 ```
 
-2. Upload it like so:
-
-```sh copy
-shasum ./bots.tar.gz && curl --upload-file \
-./bots.tar.gz https://transfer.sh/$(openssl rand -base64 10 | tr -dc 'a-zA-Z0-9').tar.gz
-```
-
-You will see an output like so:
-
-```
-$ shasum ./bots.tar.gz && curl --upload-file \
-./bots.tar.gz https://transfer.sh/$(openssl rand -base64 10 | tr -dc 'a-zA-Z0-9').tar.gz
-36879187deafb40a14df3cc9c516f7a24f1d3cea  ./bots.tar.gz
-https://transfer.sh/uV3zSH/mKVxuk3dL4YuIQ.tar.gzroot@ubuntu-machine-and-such:~/imagineapi$
-```
-
-2. Email *all* the output text to [support@imagineapi.dev](mailto:support@imagineapi.dev)
+2. Email bots.tar.gz to [support@imagineapi.dev](mailto:support@imagineapi.dev) or upload on Dropbox or Google Drive and send us a link.
 
 
 

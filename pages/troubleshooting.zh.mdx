@@ -1,10 +1,11 @@
+// troubleshooting.mdx
 # 故障排查
 
-如果您遇到错误，请通过发送一些日志告诉我们。
+如果您遇到错误，请通过发送日志告诉我们。
 
 ## 发送日志
 
-大多数问题与 *bot* 服务相关，获取这些日志对我们进行故障排查很有帮助。
+大多数问题都与*机器人*服务有关。获取这些日志能帮助您进行故障排查。
 
 1. 压缩日志文件夹（`./bots/logs`）：
 
@@ -12,20 +13,4 @@
 tar czvf bots.tar.gz bot/logs
 ```
 
-2. 像这样上传：
-
-```sh copy
-shasum ./bots.tar.gz && curl --upload-file \
-./bots.tar.gz https://transfer.sh/$(openssl rand -base64 10 | tr -dc 'a-zA-Z0-9').tar.gz
-```
-
-您将看到如下输出：
-
-```
-$ shasum ./bots.tar.gz && curl --upload-file \
-./bots.tar.gz https://transfer.sh/$(openssl rand -base64 10 | tr -dc 'a-zA-Z0-9').tar.gz
-36879187deafb40a14df3cc9c516f7a24f1d3cea  ./bots.tar.gz
-https://transfer.sh/uV3zSH/mKVxuk3dL4YuIQ.tar.gzroot@ubuntu-machine-and-such:~/imagineapi$
-```
-
-2. 将 *所有* 输出文本发送邮件至 [support@imagineapi.dev](mailto:support@imagineapi.dev)
+2. 将bots.tar.gz发送至[support@imagineapi.dev](mailto:support@imagineapi.dev)，或上传至Dropbox或Google Drive并向我们发送链接。
