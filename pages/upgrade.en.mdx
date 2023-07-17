@@ -22,13 +22,13 @@ To get the latest `docker-compose.yml` and related files.
 Then pull the new Docker image(s):
 
 ```sh copy
-docker-compose pull
+docker compose pull
 ```
 
 You'll see the Docker images that have updates get downloaded:
 
 ```
-$ docker-compose pull
+$ docker compose pull
 Pulling database ... done
 Pulling rabbitmq ... done
 Pulling api      ... done
@@ -41,7 +41,7 @@ Pulling autoheal ... done
 Then start the containers that got updates:
 
 ```sh copy
-docker-compose up -d
+docker compose up -d
 ```
 
 </Steps>

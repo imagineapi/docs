@@ -157,14 +157,14 @@ PUBLIC_URL=https://mj.yellow-lemon.ts.net:8055
 # LOGTAIL_SOURCE_TOKEN=这是可选的，如果您希望将日志发送到 logtail.com，请在此处设置您的源令牌并取消注释。
 ```
 
-### 运行 `docker-compose`
+### 运行 `docker compose`
 
-在 `.shared.env` 中输入值后，我们运行 `docker-compose up -d`。
+在 `.shared.env` 中输入值后，我们运行 `docker compose up -d`。
 
 这将下载 Docker 镜像并启动所需的容器：
 
 ```sh
-$ docker-compose up -d
+$ docker compose up -d
 Creating network "imagineapi_default" with the default driver
 Creating volume "imagineapi_api" with default driver
 Creating volume "imagineapi_rabbitmq" with default driver
@@ -186,10 +186,10 @@ a2c3dc85e8c3: Pull complete
 56b4f4aeea2d: Download complete
 ```
 
-您可以使用 `docker-compose ps` 查看容器的状态：
+您可以使用 `docker compose ps` 查看容器的状态：
 
 ```
-$ docker-compose ps
+$ docker compose ps
         Name                       Command                  State                                  Ports
 ------------------------------------------------------------------------------------------------------------------------------------
 api                     docker-entrypoint.sh /bin/ ...   Up             0.0.0.0:8055->8055/tcp,:::8055->8055/tcp

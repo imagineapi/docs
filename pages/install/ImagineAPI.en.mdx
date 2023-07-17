@@ -160,14 +160,14 @@ PUBLIC_URL=https://mj.yellow-lemon.ts.net:8055
 # LOGTAIL_SOURCE_TOKEN=This is optional if you want logs sent to logtail.com, set your source token here and uncomment it
 ```
 
-### Run `docker-compose`
+### Run `docker compose`
 
-Once you've entered the values in `.shared.env`, we run `docker-compose up -d`.
+Once you've entered the values in `.shared.env`, we run `docker compose up -d`.
 
 This will download Docker images and start the required containers:
 
 ```sh
-$ docker-compose up -d
+$ docker compose up -d
 Creating network "imagineapi_default" with the default driver
 Creating volume "imagineapi_api" with default driver
 Creating volume "imagineapi_rabbitmq" with default driver
@@ -189,10 +189,10 @@ a2c3dc85e8c3: Pull complete
 56b4f4aeea2d: Download complete
 ```
 
-You can see the status of the containers with `docker-compose ps`:
+You can see the status of the containers with `docker compose ps`:
 
 ```
-$ docker-compose ps
+$ docker compose ps
         Name                       Command                  State                                  Ports
 ------------------------------------------------------------------------------------------------------------------------------------
 api                     docker-entrypoint.sh /bin/ ...   Up             0.0.0.0:8055->8055/tcp,:::8055->8055/tcp
