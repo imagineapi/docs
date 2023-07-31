@@ -4,16 +4,6 @@ import { Callout, Steps } from 'nextra/components'
 
 # Installing ImagineAPI
 
-## Architecture
-
-Without getting into too many details, ImagineAPI.dev has 3 separate services and a database to store data:
-
-- **API**: This manages requests you make to the API, the API key and this is where the final image is saved after it's generated
-- **RabbitMQ**: This is a queue service that holds all prompts requests when you want to generate an image. You can request multiple images to be generated and those requests are kept in the RabbitMQ queue.
-- **Bot**: The bot interacts with Midjourney and generates images.
-
-<Image src="/ImagineAPI Architecture.png" width={800} height={500} />
-
 ## Installation Steps
 
 <Steps>

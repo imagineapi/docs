@@ -3,16 +3,6 @@ import { Callout, Steps } from 'nextra/components'
 
 # 安装 ImagineAPI
 
-## 架构
-
-在不涉及太多细节的情况下，ImagineAPI.dev有3个独立的服务和一个数据库来存储数据：
-
-- **API**：这个用来管理您向API发送的请求、API密钥，以及在生成图像后最终保存的图像
-- **RabbitMQ**：这是一个队列服务，用来保存生成图像时的所有提示请求。您可以请求生成多个图像，这些请求会被保留在RabbitMQ队列中。
-- **Bot**：Bot 与 Midjourney 互动并生成图像。
-
-<Image src="/ImagineAPI Architecture.png" width={800} height={500} />
-
 ## 安装步骤
 
 <Steps>
