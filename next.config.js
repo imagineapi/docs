@@ -16,6 +16,12 @@ module.exports = withNextra(
           destination: '/aypeeeye/:slug*', // Matched parameters can be used in the destination
           permanent: true,
         },
+        // redirect /install to /self-host/install
+        {
+          source: '/install/:slug*',
+          destination: '/self-host-install/:slug*',
+          permanent: true,
+        }
       ]
     },
   }  

@@ -1,6 +1,6 @@
 {
   "index": "简介",
-  "install": "安装",
+  "self-host-install": "自托管安装",
   "aypeeeye": "API",
   "upgrade": "升级",
   "troubleshooting": "故障排查",
