@@ -1,7 +1,8 @@
 {
   "index": "Introduction",
+  "quick-start": "Quick Start",
+  "aypeeeye": "API Reference",
   "self-host-install": "Self-host Install",
-  "aypeeeye": "API",
   "upgrade": "Upgrade",
   "troubleshooting": "Troubleshooting",
   "home": {

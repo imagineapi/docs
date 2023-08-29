@@ -1,0 +1,172 @@
+import { Callout, Tab, Tabs, Steps } from 'nextra/components'
+
+
+# Quick Start with our Midjourney API
+
+## Overview
+
+This guide assumes you're using a [demo account](https://www.imagineapi.dev/pricing). We'll quickly get started by generating an image and seeing the results. You get to pick which language you use as well.
+
+The best part is that you can copy the code and use it right away!
+
+<Callout type="info" emoji="🚀">
+**The easiest to start generating Midjourney images via API is by getting a  [demo account](https://www.imagineapi.dev/pricing).**
+</Callout>
+
+<Steps>
+
+### Get the Authentication Token
+
+![Animation of steps to generate an authentication token](/authentication.gif)
+
+ 1. Once you buy a [demo account](https://www.imagineapi.dev/pricing), you will receive an email username and password. Use that to log into our demo server: [https://demo.imagineapi.dev](https://demo.imagineapi.dev).
+ 1. After you log in, click your `user icon` on the bottom left: ![](/authentication-token.png)
+ 1. These are you user settings. Scroll to the bottom and find the `Token` field and `click the round arrow button` to regenerate the token: ![](/authentication-click-regenerate.png)
+ 1. This will create a new token that you can use to authorize your API call with, so `copy the token`. You will be using this shortly so keep it around in a file somewhere.: ![](/authentication-copy-token.png)
+ 1. Then `click the checkbox button` on the top right to save your account changes: ![](/authentication-save-account-changes.png)
+
+That's all. Now we will use the token to authenticate our API calls.
+
+### Generating an image
+
+Now that you have your [authentication token](#get-the-authentication-token), you can generate your first image.
+
+Pick your favorite language to see how it's done:
+
+
+
+<Tabs items={['Node.js']}>
+<Tab>
+```js filename="midjourney-api.js" copy
+// using fetch — requires Node.js version 18 or higher
+
+const data = {
+    prompt: "hello world --ar 21:9 --style raw"
+};
+
+fetch('https://demo.imagineapi.dev/items/images/', {
+    method: 'POST',
+    headers: {
+        'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: remember to change this
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+We run it using (Node.js 18 or higher is required):
+
+```shell
+❯ node --version
+v18.14.0
+
+❯ node midjourney-api.js
+```
+
+
+The output will look like this:
+
+```js
+{
+  data: {
+    id: "cbf8b8b3-1d35-4a22-9fa4-5c5c5c5682c9",
+    prompt: "hello world --ar 21:9 --style raw",
+    results: null,
+    user_created: "4df804f1-e32e-4e1c-be58-6acbe48cce98",
+    date_created: "2023-08-29T22:50:24.993Z",
+    status: "pending",
+    progress: null,
+    url: null,
+    error: null,
+    upscaled_urls: null,
+    upscaled: []
+  }
+}
+```
+
+Now your prompt will be sent to Midjourney.
+
+A few important details to note:
+
+- The image `id` will remain the same and we can use it to get the data and status of it
+- `status` is `pending` which is the default when an image generation is first created
+- when it's done generating (`status` will be `completed`), `upscaled_urls` will have 4 separate image urls and `url` will have one grid image that has all four images in it
+</Tab>
+</Tabs>
+
+Let's continue below and [get the images that got generated](#getting-the-generated-image).
+
+### Getting the generated image
+
+It will take up to 30 seconds for an image to get generated in the demo server. We're using a Midjourney account with **turbo mode** enable so it's usually quite fast.
+
+Let's create a new file to get the image we created in the [previous step](#generating-an-image).
+
+```js filename="get-image.js" copy
+
+const imageId = 'cbf8b8b3-1d35-4a22-9fa4-5c5c5c5682c9'; // <<< TODO: remember to change this
+
+fetch(`https://demo.imagineapi.dev/items/images/${imageId}`, {
+    method: 'GET',
+    headers: {
+        'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: remember to change this
+        'Content-Type': 'application/json'
+    }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+We then run it (Node.js 18 or higher is required):
+
+```sh
+❯ node --version
+v18.14.0
+
+❯ node get-image.js
+```
+
+And if the image finished generating, this is the results we get:
+
+```js
+{
+  data: {
+    id: 'cbf8b8b3-1d35-4a22-9fa4-5c5c5c5682c9',
+    prompt: 'hello world --ar 21:9 --style raw',
+    results: '88071412-a748-4a2a-81c2-e91106082599',
+    user_created: '4df804f1-e32e-4e1c-be58-6acbe48cce98',
+    date_created: '2023-08-29T22:50:24.993Z',
+    status: 'completed',
+    progress: null,
+    url: 'https://demo.imagineapi.dev/assets/88071412-a748-4a2a-81c2-e91106082599/88071412-a748-4a2a-81c2-e91106082599.png',
+    error: null,
+    upscaled_urls: [
+      'https://demo.imagineapi.dev/assets/33c64de8-de37-463d-af53-f3aaea16588f/33c64de8-de37-463d-af53-f3aaea16588f.png',
+      'https://demo.imagineapi.dev/assets/c0f78281-2f78-4c67-8516-5895ce330085/c0f78281-2f78-4c67-8516-5895ce330085.png',
+      'https://demo.imagineapi.dev/assets/d9193d04-8e4d-4049-a2fd-fb9594b7fe8b/d9193d04-8e4d-4049-a2fd-fb9594b7fe8b.png',
+      'https://demo.imagineapi.dev/assets/88db33d1-9ca4-44dd-ba89-b4cf3c1e95be/88db33d1-9ca4-44dd-ba89-b4cf3c1e95be.png'
+    ],
+    upscaled: [
+      '33c64de8-de37-463d-af53-f3aaea16588f',
+      '88db33d1-9ca4-44dd-ba89-b4cf3c1e95be',
+      'c0f78281-2f78-4c67-8516-5895ce330085',
+      'd9193d04-8e4d-4049-a2fd-fb9594b7fe8b'
+    ]
+  }
+}
+```
+
+This is great but it would be nice to have the script automatically check the image and show us when it's done:
+
+### Waiting for the image automatically
+
+```
+// TODO: complete this section
+```
+
+</Steps>
+
