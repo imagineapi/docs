@@ -20,10 +20,10 @@ The best part is that you can copy the code and use it right away!
 ![Animation of steps to generate an authentication token](/authentication.gif)
 
  1. Once you buy a [demo account](https://www.imagineapi.dev/pricing), you will receive an email username and password. Use that to log into our demo server: [https://demo.imagineapi.dev](https://demo.imagineapi.dev).
- 1. After you log in, click your `user icon` on the bottom left: ![](/authentication-token.png)
+ 1. After you log in, click your `user icon` on the bottom left: ![user icon screenshot for ImagineAPI](/authentication-token.png)
  1. These are you user settings. Scroll to the bottom and find the `Token` field and `click the round arrow button` to regenerate the token: ![](/authentication-click-regenerate.png)
  1. This will create a new token that you can use to authorize your API call with, so `copy the token`. You will be using this shortly so keep it around in a file somewhere.: ![](/authentication-copy-token.png)
- 1. Then `click the checkbox button` on the top right to save your account changes: ![](/authentication-save-account-changes.png)
+ 1. Then `click the checkbox button` on the top right to save your account changes: ![save account details for token](/authentication-save-account-changes.png)
 
 That's all. Now we will use the token to authenticate our API calls.
 
@@ -31,30 +31,34 @@ That's all. Now we will use the token to authenticate our API calls.
 
 Now that you have your [authentication token](#get-the-authentication-token), you can generate your first image.
 
-Pick your favorite language to see how it's done:
-
-
-
-<Tabs items={['Node.js']}>
-<Tab>
-```js filename="midjourney-api.js" copy
+```js filename="midjourney-api.js" copy showLineNumbers
 // using fetch — requires Node.js version 18 or higher
 
 const data = {
-    prompt: "hello world --ar 21:9 --style raw"
+    prompt: "a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000"
 };
 
-fetch('https://demo.imagineapi.dev/items/images/', {
-    method: 'POST',
-    headers: {
-        'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: remember to change this
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error('Error:', error));
+// we wrap it in a main function here so we can use async/await inside of it.
+async function main() {
+    try {
+        const response = await fetch('https://demo.imagineapi.dev/items/images/', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: remember to change this
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const responseData = await response.json();
+        console.log(responseData);
+    } catch (error) {
+        console.error('Error generating image:', error);
+        throw error;
+    }
+}
+
+main();
 ```
 
 We run it using (Node.js 18 or higher is required):
@@ -72,12 +76,12 @@ The output will look like this:
 ```js
 {
   data: {
-    id: "cbf8b8b3-1d35-4a22-9fa4-5c5c5c5682c9",
-    prompt: "hello world --ar 21:9 --style raw",
+    id: '7f360434-675f-4abb-8cca-1ca0bca6f1a6',
+    prompt: 'a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000',
     results: null,
-    user_created: "4df804f1-e32e-4e1c-be58-6acbe48cce98",
-    date_created: "2023-08-29T22:50:24.993Z",
-    status: "pending",
+    user_created: '4df804f1-e32e-4e1c-be58-6acbe48cce98',
+    date_created: '2023-09-01T03:30:34.094Z',
+    status: 'pending',
     progress: null,
     url: null,
     error: null,
@@ -94,8 +98,6 @@ A few important details to note:
 - The image `id` will remain the same and we can use it to get the data and status of it
 - `status` is `pending` which is the default when an image generation is first created
 - when it's done generating (`status` will be `completed`), `upscaled_urls` will have 4 separate image urls and `url` will have one grid image that has all four images in it
-</Tab>
-</Tabs>
 
 Let's continue below and [get the images that got generated](#getting-the-generated-image).
 
@@ -105,20 +107,29 @@ It will take up to 30 seconds for an image to get generated in the demo server. 
 
 Let's create a new file to get the image we created in the [previous step](#generating-an-image).
 
-```js filename="get-image.js" copy
+```js filename="get-image.js" copy showLineNumbers
 
-const imageId = 'cbf8b8b3-1d35-4a22-9fa4-5c5c5c5682c9'; // <<< TODO: remember to change this
+const imageId = '7f360434-675f-4abb-8cca-1ca0bca6f1a6'; // <<< TODO: change this to image ID (the ID you got from previous request)
 
-fetch(`https://demo.imagineapi.dev/items/images/${imageId}`, {
-    method: 'GET',
-    headers: {
+async function main() {
+  try {
+    const response = await fetch(`https://demo.imagineapi.dev/items/images/${imageId}`, {
+      method: 'GET',
+      headers: {
         'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: remember to change this
         'Content-Type': 'application/json'
-    }
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error('Error:', error));
+      }
+    })
+
+    const responseData = await response.json();
+    console.log(responseData)
+  } catch (error) {
+    console.error('Error', error);
+    throw error;
+  }
+}
+
+main();
 ```
 
 We then run it (Node.js 18 or higher is required):
@@ -135,26 +146,26 @@ And if the image finished generating, this is the results we get:
 ```js
 {
   data: {
-    id: 'cbf8b8b3-1d35-4a22-9fa4-5c5c5c5682c9',
-    prompt: 'hello world --ar 21:9 --style raw',
-    results: '88071412-a748-4a2a-81c2-e91106082599',
+    id: '7f360434-675f-4abb-8cca-1ca0bca6f1a6',
+    prompt: 'a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000',
+    results: '1f662f4e-e0f1-4e0f-a6a4-30eac3865ab5',
     user_created: '4df804f1-e32e-4e1c-be58-6acbe48cce98',
-    date_created: '2023-08-29T22:50:24.993Z',
+    date_created: '2023-09-01T03:30:34.094Z',
     status: 'completed',
     progress: null,
-    url: 'https://demo.imagineapi.dev/assets/88071412-a748-4a2a-81c2-e91106082599/88071412-a748-4a2a-81c2-e91106082599.png',
+    url: 'https://demo.imagineapi.dev/assets/1f662f4e-e0f1-4e0f-a6a4-30eac3865ab5/1f662f4e-e0f1-4e0f-a6a4-30eac3865ab5.png',
     error: null,
     upscaled_urls: [
-      'https://demo.imagineapi.dev/assets/33c64de8-de37-463d-af53-f3aaea16588f/33c64de8-de37-463d-af53-f3aaea16588f.png',
-      'https://demo.imagineapi.dev/assets/c0f78281-2f78-4c67-8516-5895ce330085/c0f78281-2f78-4c67-8516-5895ce330085.png',
-      'https://demo.imagineapi.dev/assets/d9193d04-8e4d-4049-a2fd-fb9594b7fe8b/d9193d04-8e4d-4049-a2fd-fb9594b7fe8b.png',
-      'https://demo.imagineapi.dev/assets/88db33d1-9ca4-44dd-ba89-b4cf3c1e95be/88db33d1-9ca4-44dd-ba89-b4cf3c1e95be.png'
+      'https://demo.imagineapi.dev/assets/c77e1a16-c3e2-4ea6-b9d7-ab571644d080/c77e1a16-c3e2-4ea6-b9d7-ab571644d080.png',
+      'https://demo.imagineapi.dev/assets/018aa788-c140-4851-8c88-5297fe9186c9/018aa788-c140-4851-8c88-5297fe9186c9.png',
+      'https://demo.imagineapi.dev/assets/2cfcfa5c-ae91-4921-877a-0366ce4b68da/2cfcfa5c-ae91-4921-877a-0366ce4b68da.png',
+      'https://demo.imagineapi.dev/assets/83ef688b-a6a7-46c7-8cb7-756f833037cb/83ef688b-a6a7-46c7-8cb7-756f833037cb.png'
     ],
     upscaled: [
-      '33c64de8-de37-463d-af53-f3aaea16588f',
-      '88db33d1-9ca4-44dd-ba89-b4cf3c1e95be',
-      'c0f78281-2f78-4c67-8516-5895ce330085',
-      'd9193d04-8e4d-4049-a2fd-fb9594b7fe8b'
+      '018aa788-c140-4851-8c88-5297fe9186c9',
+      '2cfcfa5c-ae91-4921-877a-0366ce4b68da',
+      '83ef688b-a6a7-46c7-8cb7-756f833037cb',
+      'c77e1a16-c3e2-4ea6-b9d7-ab571644d080'
     ]
   }
 }
@@ -164,9 +175,136 @@ This is great but it would be nice to have the script automatically check the im
 
 ### Waiting for the image automatically
 
+Let's take the code snippet where [the image is generated](#generating-an-image) and make it check every 5 seconds to see if the image has been generated (i.e. `status` is `completed` or `failed`):
+
+```js filename="midjourney-api.js" copy showLineNumbers {9-10, 21-22, 28-53}
+// using fetch — requires Node.js version 18 or higher
+
+const data = {
+    prompt: "a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000"
+};
+
+// we wrap it in a main function here so we can use async/await inside of it.
+async function main() {
+    let promptResponseData;
+    // generate the image
+    try {
+        const response = await fetch('https://demo.imagineapi.dev/items/images/', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: remember to change this
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        promptResponseData = await response.json();
+        console.log(promptResponseData);
+    } catch (error) {
+        console.error('Error generating image:', error);
+        throw error;
+    }
+
+    // check if the image has finished generating
+    // let's repeat this code every 5000 milliseconds (5 seconds, set at the bottom)
+    const intervalId = setInterval(async function () {
+        try {
+          console.log('Checking image details');
+          const response = await fetch(`https://demo.imagineapi.dev/items/images/${promptResponseData.data.id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: remember to change this
+                'Content-Type': 'application/json'
+            }
+          })
+
+          const responseData = await response.json();
+          if (responseData.data.status === 'completed' || responseData.data.status === 'failed') {
+            // stop repeating
+            clearInterval(intervalId);
+            console.log('Completed image detials', responseData.data);
+          } else {
+            console.log("Image is not finished generation. Status: ", responseData.data.status)
+          }
+        } catch (error) {
+          console.error('Error getting updates', error);
+          throw error;
+        }
+    }, 5000 /* every 5 seconds */);
+    // TODO: add a check to ensure this does not run indefinitely
+}
+
+main();
 ```
-// TODO: complete this section
+
+Here's how the output might look like:
+
+```js
+{
+  data: {
+    id: 'a930a17c-2877-4ad0-8338-1dfac3ce5a84',
+    prompt: 'a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000',
+    results: null,
+    user_created: '4df804f1-e32e-4e1c-be58-6acbe48cce98',
+    date_created: '2023-09-01T04:41:18.102Z',
+    status: 'pending',
+    progress: null,
+    url: null,
+    error: null,
+    upscaled_urls: null,
+    upscaled: []
+  }
+}
+Checking image details
+Image is not finished generation. Status:  pending
+Checking image details
+Image is not finished generation. Status:  pending
+Checking image details
+Image is not finished generation. Status:  pending
+Checking image details
+Image is not finished generation. Status:  pending
+Checking image details
+Image is not finished generation. Status:  in-progress
+Checking image details
+Image is not finished generation. Status:  in-progress
+Checking image details
+Image is not finished generation. Status:  in-progress
+Checking image details
+Image is not finished generation. Status:  in-progress
+Checking image details
+Image is not finished generation. Status:  in-progress
+Checking image details
+Image is not finished generation. Status:  in-progress
+Checking image details
+Completed image detials {
+  id: 'a930a17c-2877-4ad0-8338-1dfac3ce5a84',
+  prompt: 'a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000',
+  results: 'b5d1542e-e4a0-4f47-8f61-d9961e7a45f5',
+  user_created: '4df804f1-e32e-4e1c-be58-6acbe48cce98',
+  date_created: '2023-09-01T04:41:18.102Z',
+  status: 'completed',
+  progress: null,
+  url: 'https://demo.imagineapi.dev/assets/b5d1542e-e4a0-4f47-8f61-d9961e7a45f5/b5d1542e-e4a0-4f47-8f61-d9961e7a45f5.png',
+  error: null,
+  upscaled_urls: [
+    'https://demo.imagineapi.dev/assets/e58eaa77-e5c4-480a-a183-674f139f6591/e58eaa77-e5c4-480a-a183-674f139f6591.png',
+    'https://demo.imagineapi.dev/assets/aa7571cb-eb58-4500-911c-77470e0d6032/aa7571cb-eb58-4500-911c-77470e0d6032.png',
+    'https://demo.imagineapi.dev/assets/82a8c1f3-664b-438b-befb-9c9fefb1aa73/82a8c1f3-664b-438b-befb-9c9fefb1aa73.png',
+    'https://demo.imagineapi.dev/assets/226b80ef-8c42-4c7d-910d-ffd8ea546647/226b80ef-8c42-4c7d-910d-ffd8ea546647.png'
+  ],
+  upscaled: [
+    '226b80ef-8c42-4c7d-910d-ffd8ea546647',
+    '82a8c1f3-664b-438b-befb-9c9fefb1aa73',
+    'aa7571cb-eb58-4500-911c-77470e0d6032',
+    'e58eaa77-e5c4-480a-a183-674f139f6591'
+  ]
+}
+
 ```
+
+And here's what `upscaled_urls` look like:
+![auto upscaled Midjourney image](/upscaled-results.png)
+
 
 </Steps>
 

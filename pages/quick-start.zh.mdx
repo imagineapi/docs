@@ -1,15 +1,15 @@
 import { Callout, Tab, Tabs, Steps } from 'nextra/components'
 
-# 使用我们的 Midjourney API 快速入门
+# 使用我们的Midjourney API快速入门
 
 ## 概述
 
-这篇指南假设您正在使用一个[演示账户](https://www.imagineapi.dev/pricing)。我们将通过生成一张图片并查看结果来快速开始。您也可以选择您使用的语言。
+本指南假定您正在使用[演示帐户](https://www.imagineapi.dev/pricing)。我们将通过生成一张图片并查看结果来快速开始。您也可以选择使用的编程语言。
 
-最好的部分是，您可以立即复制并使用这段代码！
+最好的部分是，您可以复制代码并立即使用！
 
 <Callout type="info" emoji="🚀">
-**通过获取一个 [演示账户](https://www.imagineapi.dev/pricing)，生成 Midjourney 图片的最简单方式。**
+**通过获取[演示帐户](https://www.imagineapi.dev/pricing)最简单的开始生成Midjourney图片的方法。**
 </Callout>
 
 <Steps>
@@ -18,42 +18,49 @@ import { Callout, Tab, Tabs, Steps } from 'nextra/components'
 
 ![生成身份验证令牌的步骤动画](/authentication.gif)
 
- 1. 一旦您购买了一个[演示账户](https://www.imagineapi.dev/pricing)，您将收到一封包含用户名和密码的电子邮件。使用这些信息登录到我们的演示服务器：[https://demo.imagineapi.dev](https://demo.imagineapi.dev)。
- 1. 登录后，点击左下角的 `用户图标`：![](/authentication-token.png)
- 1. 这些是您的用户设置。滚动到底部，找到 `令牌` 字段并 `点击圆形箭头按钮` 以重新生成令牌：![](/authentication-click-regenerate.png)
- 1. 这将创建一个新的令牌，您可以用它来授权您的 API 调用，因此 `复制该令牌`。请将其保存在某个文件中，因为您很快就会用到它：![](/authentication-copy-token.png)
- 1. 然后在右上角 `点击复选框按钮` 以保存您的账户更改：![](/authentication-save-account-changes.png)
+1. 一旦购买了[演示帐户](https://www.imagineapi.dev/pricing)，您将收到一封包含用户名和密码的电子邮件。使用它登录到我们的演示服务器：[https://demo.imagineapi.dev](https://demo.imagineapi.dev)。
+1. 登录后，点击左下角的 `用户图标`：![](/authentication-token.png)
+1. 这是您的用户设置。滚动到底部，找到 `Token` 字段并 `点击圆形箭头按钮` 以重新生成令牌：![](/authentication-click-regenerate.png)
+1. 这将创建一个新的令牌，您可以用它来授权您的API调用，所以 `复制该令牌`。请将它保存在某个文件中，因为您很快就会用到它：![](/authentication-copy-token.png)
+1. 然后 `点击右上角的复选框按钮` 以保存您的帐户更改：![](/authentication-save-account-changes.png)
 
-这样就可以了。现在我们将使用该令牌来验证我们的 API 调用。
+就是这样。现在我们将使用该令牌来验证我们的API调用。
 
 ### 生成一张图片
 
-现在您有了您的[身份验证令牌](#获取身份验证令牌)，您可以生成您的第一张图片。
+现在您拥有您的[身份验证令牌](#获取身份验证令牌)，您可以生成您的第一张图片。
 
-选择您最喜欢的语言，看看如何操作：
-
-
-```js filename="midjourney-api.js" copy
-// 使用 fetch — 需要 Node.js 18 或更高版本
+```js filename="midjourney-api.js" copy showLineNumbers
+// 使用fetch - 需要Node.js 18或更高版本
 
 const data = {
-    prompt: "hello world --ar 21:9 --style raw"
+    prompt: "a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000"
 };
 
-fetch('https://demo.imagineapi.dev/items/images/', {
-    method: 'POST',
-    headers: {
-        'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: 记得更改这个
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error('错误:', error));
+// 我们在这里将其包装在一个主函数中，以便我们可以在其中使用async/await。
+async function main() {
+    try {
+        const response = await fetch('https://demo.imagineapi.dev/items/images/', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: 记得更改这个
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const responseData = await response.json();
+        console.log(responseData);
+    } catch (error) {
+        console.error('生成图像时出错：', error);
+        throw error;
+    }
+}
+
+main();
 ```
 
-我们运行它（需要 Node.js 18 或更高版本）：
+我们使用以下命令运行它（需要Node.js 18或更高版本）：
 
 ```shell
 ❯ node --version
@@ -67,12 +74,12 @@ v18.14.0
 ```js
 {
   data: {
-    id: "cbf8b8b3-1d35-4a22-9fa4-5c5c5c5682c9",
-    prompt: "hello world --ar 21:9 --style raw",
+    id: '8fd5bc67-a4c5-4bf0-a09d-e20341d17135',
+    prompt: 'a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000',
     results: null,
-    user_created: "4df804f1-e32e-4e1c-be58-6acbe48cce98",
-    date_created: "2023-08-29T22:50:24.993Z",
-    status: "pending",
+    user_created: '4df804f1-e32e-4e1c-be58-6acbe48cce98',
+    date_created: '2023-09-01T04:33:44.939Z',
+    status: 'pending',
     progress: null,
     url: null,
     error: null,
@@ -82,39 +89,48 @@ v18.14.0
 }
 ```
 
-现在，您的提示将被发送到 Midjourney。
+现在您的提示将被发送到Midjourney。
 
-需要注意的几个重要细节：
+需要注意的一些重要细节：
 
-- 图像 `id` 将保持不变，我们可以用它来获取图像的数据和状态
-- `状态` 默认为 `pending`，这是首次创建图像生成时的默认状态
-- 当生成完成时（`status` 将变为 `completed`），`upscaled_urls` 将包含 4 个单独的图像 URL，而 `url` 将有一个包含所有四个图像的网格图像
+- 图像 `id` 将保持不变，我们可以使用它来获取数据和状态
+- `status` 是 `pending`，这是首次创建图像生成时的默认值
+- 当完成生成（`status` 将为 `completed`）时，`upscaled_urls` 将具有4个独立的图像URL，而 `url` 将具有其中包含所有四个图像的网格图像
 
-继续往下看，了解如何[获取生成的图像](#获取生成的图像)。
+让我们继续下面，并[获取生成的图像](#获取生成的图像)。
 
 ### 获取生成的图像
 
-在演示服务器中生成图像最多需要 30 秒。我们使用了启用了 **turbo 模式** 的 Midjourney 账户，所以通常非常快。
+在演示服务器中生成一张图像最多需要30秒。我们使用 **turbo mode** 启用的Midjourney帐户，所以通常非常快。
 
-让我们创建一个新文件，以获取我们在[上一步](#生成一张图片)中创建的图像。
+让我们创建一个新文件来获取我们在[上一步](#生成一张图片)中创建的图像。
 
-```js filename="get-image.js" copy
+```js filename="get-image.js" copy showLineNumbers
 
-const imageId = 'cbf8b8b3-1d35-4a22-9fa4-5c5c5c5682c9'; // <<< TODO: 记得更改这个
+const imageId = '7f360434-675f-4abb-8cca-1ca0bca6f1a6'; // <<< TODO: 更改为图像ID（您从上一个请求中得到的ID）
 
-fetch(`https://demo.imagineapi.dev/items/images/${imageId}`, {
-    method: 'GET',
-    headers: {
+async function main() {
+  try {
+    const response = await fetch(`https://demo.imagineapi.dev/items/images/${imageId}`, {
+      method: 'GET',
+      headers: {
         'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: 记得更改这个
         'Content-Type': 'application/json'
-    }
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error('错误:', error));
+      }
+    })
+
+    const responseData = await response.json();
+    console.log(responseData)
+  } catch (error) {
+    console.error('出错了', error);
+    throw error;
+  }
+}
+
+main();
 ```
 
-然后我们运行它（需要 Node.js 18 或更高版本）：
+然后我们运行它（需要Node.js 18或更高版本）：
 
 ```sh
 ❯ node --version
@@ -125,34 +141,164 @@ v18.14.0
 
 如果图像完成生成，这是我们得到的结果：
 
+
 ```js
 {
   data: {
-    id: 'cbf8b8b3-1d35-4a22-9fa4-5c5c5c5682c9',
-    prompt: 'hello world --ar 21:9 --style raw',
-    results: '88071412-a748-4a2a-81c2-e91106082599',
+    id: '8fd5bc67-a4c5-4bf0-a09d-e20341d17135',
+    prompt: 'a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000',
+    results: 'e779c669-fa11-4dce-968e-bb673d16f48c',
     user_created: '4df804f1-e32e-4e1c-be58-6acbe48cce98',
-    date_created: '2023-08-29T22:50:24.993Z',
+    date_created: '2023-09-01T04:33:44.939Z',
     status: 'completed',
     progress: null,
-    url: 'https://demo.imagineapi.dev/assets/88071412-a748-4a2a-81c2-e91106082599/88071412-a748-4a2a-81c2-e91106082599.png',
+    url: 'https://demo.imagineapi.dev/assets/e779c669-fa11-4dce-968e-bb673d16f48c/e779c669-fa11-4dce-968e-bb673d16f48c.png',
     error: null,
     upscaled_urls: [
-      'https://demo.imagineapi.dev/assets/33c64de8-de37-463d-af53-f3aaea16588f/33c64de8-de37-463d-af53-f3aaea16588f.png',
-      'https://demo.imagineapi.dev/assets/c0f78281-2f78-4c67-8516-5895ce330085/c0f78281-2f78-4c67-8516-5895ce330085.png',
-      'https://demo.imagineapi.dev/assets/d9193d04-8e4d-4049-a2fd-fb9594b7fe8b/d9193d04-8e4d-4049-a2fd-fb9594b7fe8b.png',
-      'https://demo.imagineapi.dev/assets/88db33d1-9ca4-44dd-ba89-b4cf3c1e95be/88db33d1-9ca4-44dd-ba89-b4cf3c1e95be.png'
+      'https://demo.imagineapi.dev/assets/591495eb-5db5-4b85-a3aa-d06309b614ed/591495eb-5db5-4b85-a3aa-d06309b614ed.png',
+      'https://demo.imagineapi.dev/assets/fdb55e69-5c15-4846-8050-d6ae991657c1/fdb55e69-5c15-4846-8050-d6ae991657c1.png',
+      'https://demo.imagineapi.dev/assets/b625e482-a91f-4451-8086-6d6eeb0e9bd7/b625e482-a91f-4451-8086-6d6eeb0e9bd7.png',
+      'https://demo.imagineapi.dev/assets/7ef88522-f4d1-4ed3-9f52-6306cca167a6/7ef88522-f4d1-4ed3-9f52-6306cca167a6.png'
     ],
     upscaled: [
-      '33c64de8-de37-463d-af53-f3aaea16588f',
-      '88db33d1-9ca4-44dd-ba89-b4cf3c1e95be',
-      'c0f78281-2f78-4c67-8516-5895ce330085',
-      'd9193d04-8e4d-4049-a2fd-fb9594b7fe8b'
+      '591495eb-5db5-4b85-a3aa-d06309b614ed',
+      '7ef88522-f4d1-4ed3-9f52-6306cca167a6',
+      'b625e482-a91f-4451-8086-6d6eeb0e9bd7',
+      'fdb55e69-5c15-4846-8050-d6ae991657c1'
     ]
   }
 }
 ```
 
-这样就完成了！您现在可以使用图像 ID 访问您的图片。
+
+### 自动等待图像
+
+让我们取下[生成图像的代码片段](#%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87)，并让它每 5 秒检查一次图像是否已生成（即 status 是 completed 或 failed）：
+
+```js filename="midjourney-api.js" copy showLineNumbers {9-10, 21-22, 28-53}
+// 使用 fetch —— 需要 Node.js 18 或更高版本
+
+const data = {
+    prompt: "a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000"
+};
+
+// 我们在这里将其包装在一个主函数中，以便我们可以在其中使用 async/await。
+async function main() {
+    let promptResponseData;
+    // 生成图像
+    try {
+        const response = await fetch('https://demo.imagineapi.dev/items/images/', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: 记得更改这个
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        promptResponseData = await response.json();
+        console.log(promptResponseData);
+    } catch (error) {
+        console.error('生成图片时出错：', error);
+        throw error;
+    }
+
+    // 检查图像是否已完成生成
+    // 我们每 5000 毫秒（5 秒，设置在底部）重复此代码
+    const intervalId = setInterval(async function () {
+        try {
+          console.log('正在检查图像详情');
+          const response = await fetch(`https://demo.imagineapi.dev/items/images/${promptResponseData.data.id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: 记得更改这个
+                'Content-Type': 'application/json'
+            }
+          })
+
+          const responseData = await response.json();
+          if (responseData.data.status === 'completed' || responseData.data.status === 'failed') {
+            // 停止重复
+            clearInterval(intervalId);
+            console.log('完成的图像详情', responseData.data);
+          } else {
+            console.log("图像尚未完成生成。状态：", responseData.data.status)
+          }
+        } catch (error) {
+          console.error('获取更新时出错', error);
+          throw error;
+        }
+    }, 5000 /* 每 5 秒 */);
+    // TODO: 添加检查以确保这不会无限期运行
+}
+
+main();
+```
+
+输出可能如下所示：
+
+
+```js
+{
+  data: {
+    id: '96e8c151-085f-4e1b-a3be-36dcff594dbd',
+    prompt: 'a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000',
+    results: null,
+    user_created: '4df804f1-e32e-4e1c-be58-6acbe48cce98',
+    date_created: '2023-09-01T04:36:06.549Z',
+    status: 'pending',
+    progress: null,
+    url: null,
+    error: null,
+    upscaled_urls: null,
+    upscaled: []
+  }
+}
+正在检查图像详情
+图像尚未完成生成。状态： pending
+正在检查图像详情
+图像尚未完成生成。状态： pending
+正在检查图像详情
+图像尚未完成生成。状态： pending
+正在检查图像详情
+图像尚未完成生成。状态： pending
+正在检查图像详情
+图像尚未完成生成。状态： in-progress
+正在检查图像详情
+图像尚未完成生成。状态： in-progress
+正在检查图像详情
+图像尚未完成生成。状态： in-progress
+正在检查图像详情
+图像尚未完成生成。状态： in-progress
+正在检查图像详情
+图像尚未完成生成。状态： in-progress
+正在检查图像详情
+完成的图像详情 {
+  id: '96e8c151-085f-4e1b-a3be-36dcff594dbd',
+  prompt: 'a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000',
+  results: 'ad2fd5e8-09f5-49ed-b00c-c4ce492deb6b',
+  user_created: '4df804f1-e32e-4e1c-be58-6acbe48cce98',
+  date_created: '2023-09-01T04:36:06.549Z',
+  status: 'completed',
+  progress: null,
+  url: 'https://demo.imagineapi.dev/assets/ad2fd5e8-09f5-49ed-b00c-c4ce492deb6b/ad2fd5e8-09f5-49ed-b00c-c4ce492deb6b.png',
+  error: null,
+  upscaled_urls: [
+    'https://demo.imagineapi.dev/assets/426e213c-8ace-462e-b62c-ba1b63ace088/426e213c-8ace-462e-b62c-ba1b63ace088.png',
+    'https://demo.imagineapi.dev/assets/665b2bf2-66ea-4a18-a3f5-5532edd4d2e1/665b2bf2-66ea-4a18-a3f5-5532edd4d2e1.png',
+    'https://demo.imagineapi.dev/assets/a73df4d2-3d3d-418f-bc56-8d338b2f33a4/a73df4d2-3d3d-418f-bc56-8d338b2f33a4.png',
+    'https://demo.imagineapi.dev/assets/c6dd3426-dcf1-4753-ba64-a9bcacbd0723/c6dd3426-dcf1-4753-ba64-a9bcacbd0723.png'
+  ],
+  upscaled: [
+    '426e213c-8ace-462e-b62c-ba1b63ace088',
+    '665b2bf2-66ea-4a18-a3f5-5532edd4d2e1',
+    'a73df4d2-3d3d-418f-bc56-8d338b2f33a4',
+    'c6dd3426-dcf1-4753-ba64-a9bcacbd0723'
+  ]
+}
+```
+
+`upscaled_urls` 的样子如下：
+![自动放大的 Midjourney 图像](/upscaled-results.png)
 
 </Steps>
