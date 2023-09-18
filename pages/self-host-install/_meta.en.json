@@ -1,5 +1,7 @@
 {
     "requirements": "Requirements",
     "discord-bot": "Discord Bot",
-    "ImagineAPI": "ImagineAPI Components"
+    "ImagineAPI": "ImagineAPI Components",
+    "upgrade": "Upgrade",
+    "troubleshooting": "Troubleshooting"  
 }

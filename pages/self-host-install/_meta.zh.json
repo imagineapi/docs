@@ -1,5 +1,7 @@
 {
     "requirements": "要求",
     "discord-bot": "Discord 机器人",
-    "ImagineAPI": "ImagineAPI 组件"
+    "ImagineAPI": "ImagineAPI 组件",
+    "upgrade": "升级",
+    "troubleshooting": "故障排查"  
 }
