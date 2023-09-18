@@ -1,0 +1,306 @@
+import { Callout, Tab, Tabs, Steps } from 'nextra/components'
+
+# 使用Midjourney API快速入门
+
+## 概览
+
+本指南假设您使用的是[演示帐户](https://www.imagineapi.dev/pricing)。我们将通过生成图像并查看结果快速开始。您还可以选择使用的语言。
+
+最好的部分是您可以复制代码并立即使用它！
+
+<Callout type="info" emoji="🚀">
+**通过API生成Midjourney图像的最简单方法是获得[演示帐户](https://www.imagineapi.dev/pricing)。**
+</Callout>
+
+<Steps>
+
+### 获取认证令牌
+
+![生成认证令牌的步骤动画](/authentication.gif)
+
+ 1. 一旦您购买了[演示帐户](https://www.imagineapi.dev/pricing)，您将收到一个电子邮件用户名和密码。使用它登录我们的演示服务器：[https://demo.imagineapi.dev](https://demo.imagineapi.dev)。
+ 1. 登录后，点击左下角的`用户图标`：![ImagineAPI的用户图标截图](/authentication-token.png)
+ 1. 这些是您的用户设置。滚动到底部，找到`Token`字段并`点击圆形箭头按钮`以重新生成令牌：![](/authentication-click-regenerate.png)
+ 1. 这将创建一个新的令牌，您可以使用它来授权您的API调用，所以`复制该令牌`。请将其保存在某个文件中，因为您将很快使用它：![](/authentication-copy-token.png)
+ 1. 然后在右上角`点击复选框按钮`以保存您的帐户更改：![为令牌保存帐户详细信息](/authentication-save-account-changes.png)
+
+就这样。现在我们将使用该令牌对我们的API调用进行身份验证。
+
+### 生成图像
+
+现在您拥有了[认证令牌](#get-the-authentication-token)，您可以生成第一张图像。
+
+```php filename="midjourney-api.php" copy showLineNumbers
+<?php
+$data = [
+    'prompt' => 'a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000'
+];
+
+$url = 'https://demo.imagineapi.dev/items/images/';
+
+$headers = [
+    "Authorization: Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf", # <<<< TODO 更改这里的API密钥
+
+    "Content-Type: application/json"
+];
+
+
+$options = [
+    'http' => [
+        'method' => 'POST',
+        'header' => join("\r\n", $headers),
+        'content' => json_encode($data)
+    ]
+];
+
+$context = stream_context_create($options);
+$response = file_get_contents($url, false, $context);
+$responseData = json_decode($response, true);
+
+echo json_encode($responseData, JSON_UNESCAPED_SLASHES) . "\n";
+?>
+```
+
+我们使用(PHP7+是必需的)运行它：
+
+```shell
+❯ php --version
+PHP 8.2.10 (cli) (built: Aug 31 2023 18:52:55) (NTS)
+Copyright (c) The PHP Group
+Zend Engine v4.2.10, Copyright (c) Zend Technologies
+    with Zend OPcache v8.2.10, Copyright (c), by Zend Technologies
+
+❯ php midjourney-api.php
+```
+
+输出将如下所示：
+
+```js
+{
+    "data": {
+        "id": "7de767f8-f7ef-425d-b967-3df8670efd39",
+        "prompt": "a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000",
+        "results": null,
+        "user_created": "126353b1-2c3e-42af-9597-b141c0e50fae",
+        "date_created": "2023-09-18T18:38:05.077Z",
+        "status": "pending",
+        "progress": null,
+        "url": null,
+        "error": null,
+        "upscaled_urls": null,
+        "upscaled": []
+    }
+}
+```
+
+现在您的提示将被发送到Midjourney。
+
+需要注意的几个重要细节：
+
+- 图像`id`将保持不变，我们可以使用它获取数据和状态
+- `status`是`pending`，这是图像生成首次创建时的默认值
+- 当生成完成时（`status`将为`completed`），`upscaled_urls`将有4个独立的图像URL，`url`将有一个包含其中的所有四个图像的网格图像
+
+让我们继续下面并[获取生成的图像](#获取生成的图像)。
+
+### 获取生成的图像
+
+在演示服务器上生成图像最多需要30秒。我们使用了启用了**涡轮模式**的Midjourney帐户，所以通常非常快。
+
+让我们创建一个新文件，以获取我们在[上一步](#生成图像)中创建的图像。
+
+```php filename="get-image.php" copy showLineNumbers
+<?php
+$imageId = '7de767f8-f7ef-425d-b967-3df8670efd39'; // TODO: 更改这个
+
+$url = 'https://demo.imagineapi.dev/items/images/' . $imageId;
+$headers = [
+    'Authorization: Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // TODO: 记得更改这个
+];
+
+
+$options = [
+    'http' => [
+        'method' => 'GET',
+        'header' => join("\r\n", $headers)
+    ]
+];
+
+$context = stream_context_create($options);
+$response = file_get_contents($url, false, $context);
+$responseData = json_decode($response, true);
+
+echo json_encode($responseData, JSON_UNESCAPED_SLASHES) . "\n";
+?>
+```
+
+我们使用(PHP7+是必需的)运行它：
+
+```shell
+❯ php --version
+PHP 8.2.10 (cli) (built: Aug 31 2023 18:52:55) (NTS)
+Copyright (c) The PHP Group
+Zend Engine v4.2.10, Copyright (c) Zend Technologies
+    with Zend OPcache v8.2.10, Copyright (c), by Zend Technologies
+
+❯ php get-image.php
+```
+
+输出将如下所示：
+
+```js
+{
+    "data": {
+        "id": "7de767f8-f7ef-425d-b967-3df8670efd39",
+        "prompt": "a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000",
+        "results": "fa7546d9-ece9-4168-ba53-e750a2d5dd09",
+        "user_created": "126353b1-2c3e-42af-9597-b141c0e50fae",
+        "date_created": "2023-09-18T19:51:51.998Z",
+        "status": "completed",
+        "progress": null,
+        "url": "https://demo.imagineapi.dev/assets/fa7546d9-ece9-4168-ba53-e750a2d5dd09/fa7546d9-ece9-4168-ba53-e750a2d5dd09.png",
+        "error": null,
+        "upscaled_urls": [
+            "https://demo.imagineapi.dev/assets/13bcc54e-778a-4726-8a0e-85c7a927d1da/13bcc54e-778a-4726-8a0e-85c7a927d1da.png",
+            "https://demo.imagineapi.dev/assets/283ef97a-34db-4d42-b4ec-62526be8c1ed/283ef97a-34db-4d42-b4ec-62526be8c1ed.png",
+            "https://demo.imagineapi.dev/assets/04d84761-3552-45f4-ac9e-d223ad68c03d/04d84761-3552-45f4-ac9e-d223ad68c03d.png",
+            "https://demo.imagineapi.dev/assets/741c0569-bb9b-4986-b99a-622ee4a308ee/741c0569-bb9b-4986-b99a-622ee4a308ee.png"
+        ],
+        "upscaled": [
+            "04d84761-3552-45f4-ac9e-d223ad68c03d",
+            "13bcc54e-778a-4726-8a0e-85c7a927d1da",
+            "283ef97a-34db-4d42-b4ec-62526be8c1ed",
+            "741c0569-bb9b-4986-b99a-622ee4a308ee"
+        ]
+    }
+}
+```
+
+这很好，但如果脚本能自动检查图片并在完成时显示给我们就更好了：
+
+### 自动等待图像
+
+让我们拿这段[生成图像的代码](#generating-an-image)，并让它每5秒检查一次图像是否已经生成（即 `status` 是 `completed` 或 `failed`）：
+
+```php filename="midjourney-api.php" copy showLineNumbers {27, 31-58}
+<?php
+$data = [
+    'prompt' => 'a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000'
+];
+
+$url = 'https://demo.imagineapi.dev/items/images/';
+
+$headers = [
+    "Authorization: Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf", # <<<< TODO 更改此处的API密钥
+    "Content-Type: application/json"
+];
+
+
+$options = [
+    'http' => [
+        'method' => 'POST',
+        'header' => join("\r\n", $headers),
+        'content' => json_encode($data)
+    ]
+];
+
+$context = stream_context_create($options);
+$response = file_get_contents($url, false, $context);
+$responseData = json_decode($response, true);
+
+
+// 初始响应
+echo json_encode($responseData, JSON_UNESCAPED_SLASHES) . "\n";
+
+
+// 轮询以完成
+while (true) {
+    sleep(5); // 等待5秒
+
+    $imageId = $responseData['data']['id'];
+    $url = 'https://demo.imagineapi.dev/items/images/' . $imageId;
+
+    $options = [
+        'http' => [
+            'method' => 'GET',
+            'header' => join("\r\n", $headers),
+        ]
+    ];
+
+    $innerContext = stream_context_create($options);
+
+    $response = file_get_contents($url, false, $innerContext);
+    $checkData = json_decode($response, true);
+
+    if ($checkData['data']['status'] === 'completed' || $checkData['data']['status'] === 'failed') {
+        // 当图像完成或失败时停止
+        echo json_encode($checkData, JSON_UNESCAPED_SLASHES) . "\n";
+        break;
+    } else {
+        echo "图像尚未完成生成。状态：" . $checkData['data']['status'] . "\n";
+    }
+    // TODO: 添加检查以确保这不会无限运行
+}
+?>
+```
+
+以下是输出可能的样子：
+
+```js
+{
+    "data": {
+        "id": "e91f5fb0-687f-4c90-83ee-36be3e6ebc7c",
+        "prompt": "a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000",
+        "results": null,
+        "user_created": "126353b1-2c3e-42af-9597-b141c0e50fae",
+        "date_created": "2023-09-18T20:00:05.236Z",
+        "status": "pending",
+        "progress": null,
+        "url": null,
+        "error": null,
+        "upscaled_urls": null,
+        "upscaled": []
+    }
+}
+图像尚未完成生成。状态：pending
+图像尚未完成生成。状态：pending
+图像尚未完成生成。状态：pending
+图像尚未完成生成。状态：pending
+图像尚未完成生成。状态：pending
+图像尚未完成生成。状态：pending
+图像尚未完成生成。状态：in-progress
+图像尚未完成生成。状态：in-progress
+图像尚未完成生成。状态：in-progress
+图像尚未完成生成。状态：in-progress
+图像尚未完成生成。状态：in-progress
+{
+    "data": {
+        "id": "e91f5fb0-687f-4c90-83ee-36be3e6ebc7c",
+        "prompt": "a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000",
+        "results": "20ed45fc-a51e-45bb-816f-07f66e0989b3",
+        "user_created": "126353b1-2c3e-42af-9597-b141c0e50fae",
+        "date_created": "2023-09-18T20:00:05.236Z",
+        "status": "completed",
+        "progress": null,
+        "url": "https://demo.imagineapi.dev/assets/20ed45fc-a51e-45bb-816f-07f66e0989b3/20ed45fc-a51e-45bb-816f-07f66e0989b3.png",
+        "error": null,
+        "upscaled_urls": [
+            "https://demo.imagineapi.dev/assets/1339d698-abe4-4885-a758-b8d9fe5116a0/1339d698-abe4-4885-a758-b8d9fe5116a0.png",
+            "https://demo.imagineapi.dev/assets/16776c5e-cde6-4281-9be7-e302368b003f/16776c5e-cde6-4281-9be7-e302368b003f.png",
+            "https://demo.imagineapi.dev/assets/fc25b62d-ad85-4669-a2a7-9e586fcb93b3/fc25b62d-ad85-4669-a2a7-9e586fcb93b3.png",
+            "https://demo.imagineapi.dev/assets/006e9cdd-62cf-4c3f-9f94-f81e44b812ef/006e9cdd-62cf-4c3f-9f94-f81e44b812ef.png"
+        ],
+        "upscaled": [
+            "006e9cdd-62cf-4c3f-9f94-f81e44b812ef",
+            "1339d698-abe4-4885-a758-b8d9fe5116a0",
+            "16776c5e-cde6-4281-9be7-e302368b003f",
+            "fc25b62d-ad85-4669-a2a7-9e586fcb93b3"
+        ]
+    }
+}
+```
+
+这是 `upscaled_urls` 的样子：
+![自动放大的Midjourney图像](/upscaled-results-php.png)
+
+</Steps>
