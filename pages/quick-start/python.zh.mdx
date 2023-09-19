@@ -1,0 +1,251 @@
+import { Callout, Tab, Tabs, Steps } from 'nextra/components'
+
+使用Python与我们的Midjourney API
+
+## 概述
+
+本指南假定您正在使用[演示帐户](https://www.imagineapi.dev/pricing)。我们将通过生成一张图片并查看结果来快速开始。您也可以选择使用的编程语言。
+
+最好的部分是，您可以复制代码并立即使用！
+
+<Callout type="info" emoji="🚀">
+**通过获取[演示帐户](https://www.imagineapi.dev/pricing)最简单的开始生成Midjourney图片的方法。**
+</Callout>
+
+<Steps>
+
+### 获取身份验证令牌
+
+![生成身份验证令牌的步骤动画](/authentication.gif)
+
+1. 一旦购买了[演示帐户](https://www.imagineapi.dev/pricing)，您将收到一封包含用户名和密码的电子邮件。使用它登录到我们的演示服务器：[https://demo.imagineapi.dev](https://demo.imagineapi.dev)。
+1. 登录后，点击左下角的 `用户图标`：![](/authentication-token.png)
+1. 这是您的用户设置。滚动到底部，找到 `Token` 字段并 `点击圆形箭头按钮` 以重新生成令牌：![](/authentication-click-regenerate.png)
+1. 这将创建一个新的令牌，您可以用它来授权您的API调用，所以 `复制该令牌`。请将它保存在某个文件中，因为您很快就会用到它：![](/authentication-copy-token.png)
+1. 然后 `点击右上角的复选框按钮` 以保存您的帐户更改：![](/authentication-save-account-changes.png)
+
+就是这样。现在我们将使用该令牌来验证我们的API调用。
+
+### 生成一张图片
+
+现在您拥有您的[身份验证令牌](#获取身份验证令牌)，您可以生成您的第一张图片。
+
+```python filename="midjourney_api.py" copy showLineNumbers
+import http.client
+import json
+import pprint
+
+data = {
+    "prompt": "a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000"
+}
+
+headers = {
+    'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf',  # <<<< TODO: 记得更改这个
+    'Content-Type': 'application/json'
+}
+
+conn = http.client.HTTPSConnection("demo.imagineapi.dev")
+conn.request("POST", "/items/images/", body=json.dumps(data), headers=headers)
+
+response = conn.getresponse()
+response_data = json.loads(response.read().decode('utf-8'))
+
+pprint.pp(response_data)
+```
+
+我们使用以下命令运行它：
+
+```shell
+❯ python3 --version
+Python 3.11.5
+
+❯ python midjourney_api.py
+```
+
+输出将如下所示：
+
+```python
+{  'data': {  'date_created': '2023-09-18T22:34:10.127Z',
+              'error': None,
+              'id': 'd85674b8-106a-45b2-9514-04331e80127c',
+              'progress': None,
+              'prompt': 'a pretty lady at the beach --ar 9:21 --chaos 40 '
+                        '--stylize 1000',
+              'results': None,
+              'status': 'pending',
+              'upscaled': [],
+              'upscaled_urls': None,
+              'url': None,
+              'user_created': '126353b1-2c3e-42af-9597-b141c0e50fae'}}
+```
+
+现在您的提示将被发送到Midjourney。
+
+需要注意的一些重要细节：
+
+- 图像 `id` 将保持不变，我们可以使用它来获取数据和状态
+- `status` 是 `pending`，这是首次创建图像生成时的默认值
+- 当完成生成（`status` 将为 `completed`）时，`upscaled_urls` 将具有4个独立的图像URL，而 `url` 将具有其中包含所有四个图像的网格图像
+
+让我们继续下面，并[获取生成的图像](#获取生成的图像)。
+
+### 获取生成的图像
+
+在演示服务器中生成一张图像最多需要30秒。我们使用 **turbo mode** 启用的Midjourney帐户，所以通常非常快。
+
+让我们创建一个新文件来获取我们在[上一步](#生成一张图片)中创建的图像。
+
+```python filename="get_image.py" copy showLineNumbers
+import http.client
+import json
+import pprint
+
+image_id = 'd85674b8-106a-45b2-9514-04331e80127c'  # TODO：将此更改为图片ID（您从之前的请求中获得的ID）
+
+connection = http.client.HTTPSConnection("demo.imagineapi.dev")
+headers = {
+    'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf',  # TODO: 记得更改这个
+    'Content-Type': 'application/json'
+}
+
+try:
+    connection.request("GET", f"/items/images/{image_id}", headers=headers)
+    response = connection.getresponse()
+    data = json.loads(response.read().decode())
+    pprint.pp(data, indent=4)
+except Exception as error:
+    print(f"Error: {error}")
+```
+
+然后我们运行它：
+
+```sh
+$ python3 --version
+Python 3.11.5
+
+$ python3 get_image.py
+```
+
+如果图像完成生成，这是我们得到的结果：
+
+
+```python
+{'data': {'id': 'd85674b8-106a-45b2-9514-04331e80127c',
+          'prompt': 'a pretty lady at the beach --ar 9:21 --chaos 40 --stylize '
+                    '1000',
+          'results': 'c167ecef-6f7c-4b94-8aba-6da282c14246',
+          'user_created': '126353b1-2c3e-42af-9597-b141c0e50fae',
+          'date_created': '2023-09-18T22:42:52.569Z',
+          'status': 'completed',
+          'progress': None,
+          'url': 'https://demo.imagineapi.dev/assets/c167ecef-6f7c-4b94-8aba-6da282c14246/c167ecef-6f7c-4b94-8aba-6da282c14246.png',
+          'error': None,
+          'upscaled_urls': ['https://demo.imagineapi.dev/assets/05f05786-af1a-497e-9a7e-d0aa2add04a7/05f05786-af1a-497e-9a7e-d0aa2add04a7.png',
+                            'https://demo.imagineapi.dev/assets/20984abb-a4a1-4376-b622-178ade59af14/20984abb-a4a1-4376-b622-178ade59af14.png',
+                            'https://demo.imagineapi.dev/assets/c1f1be14-dcb8-4d34-9e4f-3e7fa9e58187/c1f1be14-dcb8-4d34-9e4f-3e7fa9e58187.png',
+                            'https://demo.imagineapi.dev/assets/d82b5c66-7eca-406f-a210-cb645f06c936/d82b5c66-7eca-406f-a210-cb645f06c936.png'],
+          'upscaled': ['05f05786-af1a-497e-9a7e-d0aa2add04a7',
+                       '20984abb-a4a1-4376-b622-178ade59af14',
+                       'c1f1be14-dcb8-4d34-9e4f-3e7fa9e58187',
+                       'd82b5c66-7eca-406f-a210-cb645f06c936']}}
+```
+
+这很好，但如果脚本能自动检查图片并在完成后显示给我们就更好了。
+
+
+### 自动等待图像
+
+让我们取下[生成图像的代码片段](#%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87)，并让它每 5 秒检查一次图像是否已生成（即 status 是 completed 或 failed）：
+
+```python filename="midjourney_api.py" copy showLineNumbers {15-37}
+import json
+import time
+import http.client
+import pprint
+
+data = {
+    "prompt": "a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000"
+}
+
+headers = {
+    'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf',  # <<<< TODO: 记得更改这个
+    'Content-Type': 'application/json'
+}
+
+def send_request(method, path, body=None, headers={}):
+    conn = http.client.HTTPSConnection("demo.imagineapi.dev")
+    conn.request(method, path, body=json.dumps(body) if body else None, headers=headers)
+    response = conn.getresponse()
+    data = json.loads(response.read().decode())
+    conn.close()
+    return data
+
+prompt_response_data = send_request('POST', '/items/images/', data, headers)
+pprint.pp(prompt_response_data)
+
+def check_image_status():
+    response_data = send_request('GET', f"/items/images/{prompt_response_data['data']['id']}", headers=headers)
+    if response_data['data']['status'] in ['completed', 'failed']:
+        print('图片处理完成',)
+        pprint.pp(response_data['data'])
+        return True
+    else:
+        print(f"图片尚未生成完成。状态：{response_data['data']['status']}")
+        return False
+
+
+while not check_image_status():
+    time.sleep(5)  # wait for 5 seconds
+```
+
+输出可能如下所示：
+
+
+```python
+{'data': {'id': '51e351fc-cf44-4346-8b96-400560e8d3f4',
+          'prompt': 'a pretty lady at the beach --ar 9:21 --chaos 40 --stylize '
+                    '1000',
+          'results': None,
+          'user_created': '126353b1-2c3e-42af-9597-b141c0e50fae',
+          'date_created': '2023-09-19T16:58:02.325Z',
+          'status': 'pending',
+          'progress': None,
+          'url': None,
+          'error': None,
+          'upscaled_urls': None,
+          'upscaled': []}}
+图片尚未生成完成。状态：pending
+图片尚未生成完成。状态：pending
+图片尚未生成完成。状态：pending
+图片尚未生成完成。状态：pending
+图片尚未生成完成。状态：pending
+图片尚未生成完成。状态：pending
+图片尚未生成完成。状态：pending
+图片尚未生成完成。状态：in-progress
+图片尚未生成完成。状态：in-progress
+图片尚未生成完成。状态：in-progress
+图片尚未生成完成。状态：in-progress
+图片处理完成
+{'id': '51e351fc-cf44-4346-8b96-400560e8d3f4',
+ 'prompt': 'a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000',
+ 'results': '09cb71d2-a1e1-4347-abe7-368fc81327ea',
+ 'user_created': '126353b1-2c3e-42af-9597-b141c0e50fae',
+ 'date_created': '2023-09-19T16:58:02.325Z',
+ 'status': 'completed',
+ 'progress': None,
+ 'url': 'https://demo.imagineapi.dev/assets/09cb71d2-a1e1-4347-abe7-368fc81327ea/09cb71d2-a1e1-4347-abe7-368fc81327ea.png',
+ 'error': None,
+ 'upscaled_urls': ['https://demo.imagineapi.dev/assets/e4bc0749-c968-4178-9f27-7445412ee0b4/e4bc0749-c968-4178-9f27-7445412ee0b4.png',
+                   'https://demo.imagineapi.dev/assets/fb51a55e-1d3e-43bd-9622-61bfba69a342/fb51a55e-1d3e-43bd-9622-61bfba69a342.png',
+                   'https://demo.imagineapi.dev/assets/14b88d32-cc87-4029-91fd-574ff8ea0d2c/14b88d32-cc87-4029-91fd-574ff8ea0d2c.png',
+                   'https://demo.imagineapi.dev/assets/9977909f-2f1b-421e-8c6e-deca1aea4059/9977909f-2f1b-421e-8c6e-deca1aea4059.png'],
+ 'upscaled': ['14b88d32-cc87-4029-91fd-574ff8ea0d2c',
+              '9977909f-2f1b-421e-8c6e-deca1aea4059',
+              'e4bc0749-c968-4178-9f27-7445412ee0b4',
+              'fb51a55e-1d3e-43bd-9622-61bfba69a342']}
+```
+
+`upscaled_urls` 的样子如下：
+![自动放大的 Midjourney 图像](/upscaled-results-python.png)
+
+</Steps>
