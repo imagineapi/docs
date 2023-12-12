@@ -1,31 +1,5 @@
-# 故障排查
+# 故障排除
 
-如果您遇到错误，请通过发送一些日志告诉我们。
+如果遇到错误，请在此处记录您的问题：[https://github.com/imagineapi/imagineapi/issues](https://github.com/imagineapi/imagineapi/issues)。
 
-## 发送日志
-
-大多数问题与 *bot* 服务相关，获取这些日志对我们进行故障排查很有帮助。
-
-1. 压缩日志文件夹（`./bots/logs`）：
-
-```sh copy
-tar czvf bots.tar.gz bot/logs
-```
-
-2. 像这样上传：
-
-```sh copy
-shasum ./bots.tar.gz && curl --upload-file \
-./bots.tar.gz https://transfer.sh/$(openssl rand -base64 10 | tr -dc 'a-zA-Z0-9').tar.gz
-```
-
-您将看到如下输出：
-
-```
-$ shasum ./bots.tar.gz && curl --upload-file \
-./bots.tar.gz https://transfer.sh/$(openssl rand -base64 10 | tr -dc 'a-zA-Z0-9').tar.gz
-36879187deafb40a14df3cc9c516f7a24f1d3cea  ./bots.tar.gz
-https://transfer.sh/uV3zSH/mKVxuk3dL4YuIQ.tar.gzroot@ubuntu-machine-and-such:~/imagineapi$
-```
-
-2. 将 *所有* 输出文本发送邮件至 [support@imagineapi.dev](mailto:support@imagineapi.dev)
+如果您需要企业支持，请联系我们：[support@imagineapi.dev](mailto:support@imagineapi.dev)
