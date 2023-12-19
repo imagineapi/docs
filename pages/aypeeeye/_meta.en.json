@@ -1,5 +1,6 @@
 {
     "authentication": "Authentication",
     "image": "Image",
+    "webhooks": "Webhooks",
     "status": "Status"
 }

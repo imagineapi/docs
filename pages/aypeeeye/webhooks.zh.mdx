@@ -1,0 +1,122 @@
+import { Callout, Tab, Tabs, Steps } from 'nextra/components'
+
+
+# Webhooks (网络钩子)
+
+在我们的[快速开始指南](../quick-start)中，我们发送了一个`POST`请求来生成初始图像，然后使用响应中的`id`来发出`GET`请求，以检查图像生成的状态并获取图像数据。
+
+这样做的一些问题包括：
+
+- 每隔X秒钟就必须检查状态，因此会消耗资源
+- 尤其是如果你不经常检查（特别是使用make.com或Zapier时，它们不允许非常频繁的检查），你就不会立即得到通知
+
+为了解决这些问题，你可以设置webhooks，当Midjourney完成你的图像生成时，会通知你。
+
+操作方式如下：
+
+<Steps>
+### 添加webhook网址
+
+点击你的用户名（左下角）。
+
+滚动到底部，点击`添加webhook`按钮。
+
+在这里，你可以输入你的webhook URL。完成后，**不要忘记保存你的用户信息**。
+
+操作看起来是这样的：
+
+![添加Midjourney webhook](/adding-webhook.gif)
+
+### Webhook数据结构
+
+```typescript
+{
+  "event": "images.items.create" | "images.items.update",
+  "payload": {
+    "id": string,
+    "prompt": string,
+    "results": null | string,
+    "user_created": string,
+    "date_created": string,
+    "status": "pending" | "in-progress" | "completed" | "failed",
+    "progress": null | number,
+    "url": null | string,
+    "error": null | string,
+    "upscaled_urls": null | string[],
+    "upscaled": string[],
+  }
+}
+```
+
+### 在图像加载时显示进度
+
+为了在图像加载时向用户显示进度指示器，请关注`status`字段，当它变为`in-progress`时，**且`progress`字段是一个大于0的数字**，`url`将包含部分生成的Midjourney图像：
+
+例如：
+
+```json
+{
+    "event": "images.items.update",
+    "payload": {
+        "id": "41b7ac2b-8a51-481b-a19c-74626a93cacc",
+        "prompt": "冬日城市风光",
+        "results": "81d2bf65-1997-485c-ad2f-3e4358a96995",
+        "user_created": "fcb5549b-f8a6-4a5f-90e9-7e337209c893",
+        "date_created": "2023-12-19T23:01:47.708Z",
+        "status": "in-progress",
+        "progress": 15,
+        "url": "https://cl.imagineapi.dev/assets/81d2bf65-1997-485c-ad2f-3e4358a96995/81d2bf65-1997-485c-ad2f-3e4358a96995.webp",
+        "error": null,
+        "upscaled_urls": null,
+        "upscaled": []
+    }
+}
+```
+
+在这种情况下，`url`将是：![部分生成的Midjourney图像](/partially-generated-midjourney-image.zh.webp)
+
+换句话说，如果你在`status`为`in-progress`时获得一个`url`值，那将是部分生成的Midjourney图像。
+
+### 获取最终图像
+
+一旦图像生成，你将收到一个新的webhook，其`status: completed`：
+
+```json
+{
+    "event": "images.items.update",
+    "payload": {
+        "id": "41b7ac2b-8a51-481b-a19c-74626a93cacc",
+        "prompt": "冬日城市风光",
+        "results": "23a8b0bb-7aee-4f28-99dd-b7ca7a4f1e84",
+        "user_created": "fcb5549b-f8a6-4a5f-90e9-7e337209c893",
+        "date_created": "2023-12-19T23:01:47.708Z",
+        "status": "completed",
+        "progress": null,
+        "url": "https://cl.imagineapi.dev/assets/23a8b0bb-7aee-4f28-99dd-b7ca7a4f1e84/23a8b0bb-7aee-4f28-99dd-b7ca7a4f1e84.png",
+        "error": null,
+        "upscaled_urls": [
+            "https://cl.imagineapi.dev/assets/0f059246-7520-44de-a546-4aa4c16ff5d7/0f059246-7520-44de-a546-4aa4c16ff5d7.png",
+            "https://cl.imagineapi.dev/assets/0ed8da36-0bbe-4879-acc8-0607f539bacf/0ed8da36-0bbe-4879-acc8-0607f539bacf.png",
+            "https://cl.imagineapi.dev/assets/9eff353d-f0a4-4c97-af99-bb85c5861b7e/9eff353d-f0a4-4c97-af99-bb85c5861b7e.png",
+            "https://cl.imagineapi.dev/assets/f2479b70-66d1-436b-bec4-5a028f5a558a/f2479b70-66d1-436b-bec4-5a028f5a558a.png"
+        ],
+        "upscaled": [
+            "0ed8da36-0bbe-4879-acc8-0607f539bacf",
+            "0f059246-7520-44de-a546-4aa4c16ff5d7",
+            "9eff353d-f0a4-4c97-af99-bb85c5861b7e",
+            "f2479b70-66d1-436b-bec4-5a028f5a558a"
+        ]
+    }
+}
+```
+
+要获取放大的图像（共4张），你可以使用`upscaled_urls`中的字符串数组。
+注意：此时的`status`是`completed`。
+
+以上例子中的图像如下所示：
+
+![Midjourney放大后的冬景图像](/Winter-Scene-in-Chinese.png)
+
+这太棒了，Midjourney 使用了中文提示，并生成了带有中式特色的图像。难道这不令人惊叹吗‽
+
+</Steps>

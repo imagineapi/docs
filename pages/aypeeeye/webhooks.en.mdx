@@ -1,0 +1,121 @@
+import { Callout, Tab, Tabs, Steps } from 'nextra/components'
+
+
+# Webhooks
+
+In our [Quick Start guide](../quick-start), we send a `POST` request to generate the initial image and then use the `id` that's in the response to make `GET` requests to check the image generation status and get the image data.
+
+Some issues with that are:
+
+- resources get used since you have to check for the status every X seconds
+- you don't get notified right away especially if you check infrequently (especially using make.com or Zapier which don't allow very frequent checks)
+
+To remedy this, you can set up webhooks to get notified when Midjourney has finished generating your image.
+
+Here's how:
+
+<Steps>
+### Add a a webhook url
+
+Click on your username (bottom left).
+
+Scroll to the bottom and click the `Add webhook` button.
+
+Here you can enter your webhook URL. Once you're done, **don't forget to save your user**.
+
+Here's how it looks:
+
+![Adding a Midjourney webhook](/adding-webhook.gif)
+
+### Webhook data structure
+
+
+```typescript
+{
+  "event": "images.items.create" | "images.items.update",
+  "payload": {
+    "id": string,
+    "prompt": string,
+    "results": null | string,
+    "user_created": string,
+    "date_created": string,
+    "status": "pending" | "in-progress" | "completed" | "failed",
+    "progress": null | number,
+    "url": null | string,
+    "error": null | string,
+    "upscaled_urls": null | string[],
+    "upscaled": string[],
+  }
+}
+```
+
+### Showing progress while image loads
+
+To show your users a progress indicator while the image is loading, watch the `status`, when it goes into `in-progress`, and **the `progress` field is a number and greater than 0**, `url` will contain the partially generated Midjourney image:
+
+For example:
+
+```json
+{
+    "event": "images.items.update",
+    "payload": {
+        "id": "46341cba-1003-4cea-934d-18530458efa3",
+        "prompt": "Winter city sights",
+        "results": "9be5e217-8892-4338-a08c-f906e3ee8697",
+        "user_created": "fcb5549b-f8a6-4a5f-90e9-7e337209c893",
+        "date_created": "2023-12-19T22:37:07.524Z",
+        "status": "in-progress",
+        "progress": 15,
+        "url": "https://cl.imagineapi.dev/assets/9be5e217-8892-4338-a08c-f906e3ee8697/9be5e217-8892-4338-a08c-f906e3ee8697.webp",
+        "error": null,
+        "upscaled_urls": null,
+        "upscaled": []
+    }
+}
+```
+
+In this case, `url` will be: ![partially generated Midjourney image](/partially-generated-midjourney-image.webp)
+
+In other words, if you get a `url` value while `status` is `in-progress`, that will be the partially generated Midjourney image.
+
+### Getting the final image(s)
+
+Once the image is generated, you will receive a new webhook with `status: completed`:
+
+```json
+{
+    "event": "images.items.update",
+    "payload": {
+        "id": "46341cba-1003-4cea-934d-18530458efa3",
+        "prompt": "Winter city sights",
+        "results": "25f4f480-5c97-4db6-9bd9-55cc4f641cce",
+        "user_created": "fcb5549b-f8a6-4a5f-90e9-7e337209c893",
+        "date_created": "2023-12-19T22:37:07.524Z",
+        "status": "completed",
+        "progress": null,
+        "url": "https://cl.imagineapi.dev/assets/25f4f480-5c97-4db6-9bd9-55cc4f641cce/25f4f480-5c97-4db6-9bd9-55cc4f641cce.png",
+        "error": null,
+        "upscaled_urls": [
+            "https://cl.imagineapi.dev/assets/6c75d047-7b36-402a-a356-44ce1aed5afe/6c75d047-7b36-402a-a356-44ce1aed5afe.png",
+            "https://cl.imagineapi.dev/assets/cc6591c0-0327-47dd-bb4c-911ffbfc1981/cc6591c0-0327-47dd-bb4c-911ffbfc1981.png",
+            "https://cl.imagineapi.dev/assets/4cf029d1-a855-41ab-954b-4ebcf974fee3/4cf029d1-a855-41ab-954b-4ebcf974fee3.png",
+            "https://cl.imagineapi.dev/assets/762f4faa-1cda-4858-ac54-bdadf7ecf51e/762f4faa-1cda-4858-ac54-bdadf7ecf51e.png"
+        ],
+        "upscaled": [
+            "4cf029d1-a855-41ab-954b-4ebcf974fee3",
+            "6c75d047-7b36-402a-a356-44ce1aed5afe",
+            "762f4faa-1cda-4858-ac54-bdadf7ecf51e",
+            "cc6591c0-0327-47dd-bb4c-911ffbfc1981"
+        ]
+    }
+}
+```
+
+To get the upscaled images (4 of them), you can use the string array in `upscaled_urls`.
+Note: `status` is now `completed`.
+
+For the above example, they look like this:
+
+![Midjourney upscaled images for a winter scene](/Midjourney-upscaled-images-for-a-winter-scene.png)
+
+</Steps>

@@ -1,5 +1,6 @@
 {
     "authentication": "身份验证",
     "image": "图像",
+    "webhooks": "Webhooks (网络钩子)",
     "status": "状态"
 }
