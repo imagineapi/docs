@@ -18,7 +18,7 @@ import { Callout, Tab, Tabs, Steps } from 'nextra/components'
 
 ![生成身份验证令牌的步骤动画](/authentication.gif)
 
-1. 一旦购买了[演示帐户](https://www.imagineapi.dev/pricing)，您将收到一封包含用户名和密码的电子邮件。使用它登录到我们的演示服务器：[https://demo.imagineapi.dev](https://demo.imagineapi.dev)。
+1. 一旦购买了[演示帐户](https://www.imagineapi.dev/pricing)，您将收到一封包含用户名和密码的电子邮件。使用它登录到我们的演示服务器：[https://cl.imagineapi.dev](https://cl.imagineapi.dev)。
 1. 登录后，点击左下角的 `用户图标`：![](/authentication-token.png)
 1. 这是您的用户设置。滚动到底部，找到 `Token` 字段并 `点击圆形箭头按钮` 以重新生成令牌：![](/authentication-click-regenerate.png)
 1. 这将创建一个新的令牌，您可以用它来授权您的API调用，所以 `复制该令牌`。请将它保存在某个文件中，因为您很快就会用到它：![](/authentication-copy-token.png)
@@ -44,7 +44,7 @@ headers = {
     'Content-Type': 'application/json'
 }
 
-conn = http.client.HTTPSConnection("demo.imagineapi.dev")
+conn = http.client.HTTPSConnection("cl.imagineapi.dev")
 conn.request("POST", "/items/images/", body=json.dumps(data), headers=headers)
 
 response = conn.getresponse()
@@ -102,7 +102,7 @@ import pprint
 
 image_id = 'd85674b8-106a-45b2-9514-04331e80127c'  # TODO：将此更改为图片ID（您从之前的请求中获得的ID）
 
-connection = http.client.HTTPSConnection("demo.imagineapi.dev")
+connection = http.client.HTTPSConnection("cl.imagineapi.dev")
 headers = {
     'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf',  # TODO: 记得更改这个
     'Content-Type': 'application/json'
@@ -138,12 +138,12 @@ $ python3 get_image.py
           'date_created': '2023-09-18T22:42:52.569Z',
           'status': 'completed',
           'progress': None,
-          'url': 'https://demo.imagineapi.dev/assets/c167ecef-6f7c-4b94-8aba-6da282c14246/c167ecef-6f7c-4b94-8aba-6da282c14246.png',
+          'url': 'https://cl.imagineapi.dev/assets/c167ecef-6f7c-4b94-8aba-6da282c14246/c167ecef-6f7c-4b94-8aba-6da282c14246.png',
           'error': None,
-          'upscaled_urls': ['https://demo.imagineapi.dev/assets/05f05786-af1a-497e-9a7e-d0aa2add04a7/05f05786-af1a-497e-9a7e-d0aa2add04a7.png',
-                            'https://demo.imagineapi.dev/assets/20984abb-a4a1-4376-b622-178ade59af14/20984abb-a4a1-4376-b622-178ade59af14.png',
-                            'https://demo.imagineapi.dev/assets/c1f1be14-dcb8-4d34-9e4f-3e7fa9e58187/c1f1be14-dcb8-4d34-9e4f-3e7fa9e58187.png',
-                            'https://demo.imagineapi.dev/assets/d82b5c66-7eca-406f-a210-cb645f06c936/d82b5c66-7eca-406f-a210-cb645f06c936.png'],
+          'upscaled_urls': ['https://cl.imagineapi.dev/assets/05f05786-af1a-497e-9a7e-d0aa2add04a7/05f05786-af1a-497e-9a7e-d0aa2add04a7.png',
+                            'https://cl.imagineapi.dev/assets/20984abb-a4a1-4376-b622-178ade59af14/20984abb-a4a1-4376-b622-178ade59af14.png',
+                            'https://cl.imagineapi.dev/assets/c1f1be14-dcb8-4d34-9e4f-3e7fa9e58187/c1f1be14-dcb8-4d34-9e4f-3e7fa9e58187.png',
+                            'https://cl.imagineapi.dev/assets/d82b5c66-7eca-406f-a210-cb645f06c936/d82b5c66-7eca-406f-a210-cb645f06c936.png'],
           'upscaled': ['05f05786-af1a-497e-9a7e-d0aa2add04a7',
                        '20984abb-a4a1-4376-b622-178ade59af14',
                        'c1f1be14-dcb8-4d34-9e4f-3e7fa9e58187',
@@ -173,7 +173,7 @@ headers = {
 }
 
 def send_request(method, path, body=None, headers={}):
-    conn = http.client.HTTPSConnection("demo.imagineapi.dev")
+    conn = http.client.HTTPSConnection("cl.imagineapi.dev")
     conn.request(method, path, body=json.dumps(body) if body else None, headers=headers)
     response = conn.getresponse()
     data = json.loads(response.read().decode())
@@ -233,12 +233,12 @@ while not check_image_status():
  'date_created': '2023-09-19T16:58:02.325Z',
  'status': 'completed',
  'progress': None,
- 'url': 'https://demo.imagineapi.dev/assets/09cb71d2-a1e1-4347-abe7-368fc81327ea/09cb71d2-a1e1-4347-abe7-368fc81327ea.png',
+ 'url': 'https://cl.imagineapi.dev/assets/09cb71d2-a1e1-4347-abe7-368fc81327ea/09cb71d2-a1e1-4347-abe7-368fc81327ea.png',
  'error': None,
- 'upscaled_urls': ['https://demo.imagineapi.dev/assets/e4bc0749-c968-4178-9f27-7445412ee0b4/e4bc0749-c968-4178-9f27-7445412ee0b4.png',
-                   'https://demo.imagineapi.dev/assets/fb51a55e-1d3e-43bd-9622-61bfba69a342/fb51a55e-1d3e-43bd-9622-61bfba69a342.png',
-                   'https://demo.imagineapi.dev/assets/14b88d32-cc87-4029-91fd-574ff8ea0d2c/14b88d32-cc87-4029-91fd-574ff8ea0d2c.png',
-                   'https://demo.imagineapi.dev/assets/9977909f-2f1b-421e-8c6e-deca1aea4059/9977909f-2f1b-421e-8c6e-deca1aea4059.png'],
+ 'upscaled_urls': ['https://cl.imagineapi.dev/assets/e4bc0749-c968-4178-9f27-7445412ee0b4/e4bc0749-c968-4178-9f27-7445412ee0b4.png',
+                   'https://cl.imagineapi.dev/assets/fb51a55e-1d3e-43bd-9622-61bfba69a342/fb51a55e-1d3e-43bd-9622-61bfba69a342.png',
+                   'https://cl.imagineapi.dev/assets/14b88d32-cc87-4029-91fd-574ff8ea0d2c/14b88d32-cc87-4029-91fd-574ff8ea0d2c.png',
+                   'https://cl.imagineapi.dev/assets/9977909f-2f1b-421e-8c6e-deca1aea4059/9977909f-2f1b-421e-8c6e-deca1aea4059.png'],
  'upscaled': ['14b88d32-cc87-4029-91fd-574ff8ea0d2c',
               '9977909f-2f1b-421e-8c6e-deca1aea4059',
               'e4bc0749-c968-4178-9f27-7445412ee0b4',

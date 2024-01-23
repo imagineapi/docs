@@ -19,7 +19,7 @@ The best part is that you can copy the code and use it right away!
 
 ![Animation of steps to generate an authentication token](/authentication.gif)
 
- 1. Once you buy a [demo account](https://www.imagineapi.dev/pricing), you will receive an email username and password. Use that to log into our demo server: [https://demo.imagineapi.dev](https://demo.imagineapi.dev).
+ 1. Once you buy a [demo account](https://www.imagineapi.dev/pricing), you will receive an email username and password. Use that to log into our demo server: [https://cl.imagineapi.dev](https://cl.imagineapi.dev).
  1. After you log in, click your `user icon` on the bottom left: ![user icon screenshot for ImagineAPI](/authentication-token.png)
  1. These are you user settings. Scroll to the bottom and find the `Token` field and `click the round arrow button` to regenerate the token: ![](/authentication-click-regenerate.png)
  1. This will create a new token that you can use to authorize your API call with, so `copy the token`. You will be using this shortly so keep it around in a file somewhere.: ![](/authentication-copy-token.png)
@@ -37,7 +37,7 @@ $data = [
     'prompt' => 'a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000'
 ];
 
-$url = 'https://demo.imagineapi.dev/items/images/';
+$url = 'https://cl.imagineapi.dev/items/images/';
 
 $headers = [
     "Authorization: Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf", # <<<< TODO change the API key here
@@ -113,7 +113,7 @@ Let's create a new file to get the image we created in the [previous step](#gene
 <?php
 $imageId = '0ecdd164-5920-4b58-9727-6347e8e74eea'; // TODO: change this
 
-$url = 'https://demo.imagineapi.dev/items/images/' . $imageId;
+$url = 'https://cl.imagineapi.dev/items/images/' . $imageId;
 $headers = [
     'Authorization: Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // TODO: remember to change this
 ];
@@ -158,13 +158,13 @@ And if the image finished generating, this is the results we get:
         "date_created": "2023-09-18T18:38:05.077Z",
         "status": "completed",
         "progress": null,
-        "url": "https://demo.imagineapi.dev/assets/e7587d63-5b9b-4905-90c9-092fcf6f3f72/e7587d63-5b9b-4905-90c9-092fcf6f3f72.png",
+        "url": "https://cl.imagineapi.dev/assets/e7587d63-5b9b-4905-90c9-092fcf6f3f72/e7587d63-5b9b-4905-90c9-092fcf6f3f72.png",
         "error": null,
         "upscaled_urls": [
-            "https://demo.imagineapi.dev/assets/3305f0ce-86fe-4891-9a39-6d17929a0f0a/3305f0ce-86fe-4891-9a39-6d17929a0f0a.png",
-            "https://demo.imagineapi.dev/assets/6fe0c304-4fa9-478b-a798-78ef2ed16f51/6fe0c304-4fa9-478b-a798-78ef2ed16f51.png",
-            "https://demo.imagineapi.dev/assets/0973622c-b8a2-49b8-b3eb-19535ee3f634/0973622c-b8a2-49b8-b3eb-19535ee3f634.png",
-            "https://demo.imagineapi.dev/assets/33148696-fc82-4cf6-8df8-462238f5494f/33148696-fc82-4cf6-8df8-462238f5494f.png"
+            "https://cl.imagineapi.dev/assets/3305f0ce-86fe-4891-9a39-6d17929a0f0a/3305f0ce-86fe-4891-9a39-6d17929a0f0a.png",
+            "https://cl.imagineapi.dev/assets/6fe0c304-4fa9-478b-a798-78ef2ed16f51/6fe0c304-4fa9-478b-a798-78ef2ed16f51.png",
+            "https://cl.imagineapi.dev/assets/0973622c-b8a2-49b8-b3eb-19535ee3f634/0973622c-b8a2-49b8-b3eb-19535ee3f634.png",
+            "https://cl.imagineapi.dev/assets/33148696-fc82-4cf6-8df8-462238f5494f/33148696-fc82-4cf6-8df8-462238f5494f.png"
         ],
         "upscaled": [
             "0973622c-b8a2-49b8-b3eb-19535ee3f634",
@@ -188,7 +188,7 @@ $data = [
     'prompt' => 'a pretty lady at the beach --ar 9:21 --chaos 40 --stylize 1000'
 ];
 
-$url = 'https://demo.imagineapi.dev/items/images/';
+$url = 'https://cl.imagineapi.dev/items/images/';
 
 $headers = [
     "Authorization: Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf", # <<<< TODO change the API key here
@@ -218,7 +218,7 @@ while (true) {
     sleep(5); // Wait for 5 seconds
 
     $imageId = $responseData['data']['id'];
-    $url = 'https://demo.imagineapi.dev/items/images/' . $imageId;
+    $url = 'https://cl.imagineapi.dev/items/images/' . $imageId;
 
     $options = [
         'http' => [
@@ -280,13 +280,13 @@ Image is not finished generation. Status: in-progress
         "date_created": "2023-09-18T18:55:33.445Z",
         "status": "completed",
         "progress": null,
-        "url": "https://demo.imagineapi.dev/assets/9e8adf49-ab32-4af4-ab30-f960d6db724d/9e8adf49-ab32-4af4-ab30-f960d6db724d.png",
+        "url": "https://cl.imagineapi.dev/assets/9e8adf49-ab32-4af4-ab30-f960d6db724d/9e8adf49-ab32-4af4-ab30-f960d6db724d.png",
         "error": null,
         "upscaled_urls": [
-            "https://demo.imagineapi.dev/assets/00200514-7de4-4f4a-a621-7e8fb892146a/00200514-7de4-4f4a-a621-7e8fb892146a.png",
-            "https://demo.imagineapi.dev/assets/03b7bb1b-43ed-4e08-b7fe-67161be23417/03b7bb1b-43ed-4e08-b7fe-67161be23417.png",
-            "https://demo.imagineapi.dev/assets/f5fc3d1b-e5f3-4f9f-825a-1b70bb4ca014/f5fc3d1b-e5f3-4f9f-825a-1b70bb4ca014.png",
-            "https://demo.imagineapi.dev/assets/68c68076-cce8-4ea3-a5c8-15aaaa2ce3e6/68c68076-cce8-4ea3-a5c8-15aaaa2ce3e6.png"
+            "https://cl.imagineapi.dev/assets/00200514-7de4-4f4a-a621-7e8fb892146a/00200514-7de4-4f4a-a621-7e8fb892146a.png",
+            "https://cl.imagineapi.dev/assets/03b7bb1b-43ed-4e08-b7fe-67161be23417/03b7bb1b-43ed-4e08-b7fe-67161be23417.png",
+            "https://cl.imagineapi.dev/assets/f5fc3d1b-e5f3-4f9f-825a-1b70bb4ca014/f5fc3d1b-e5f3-4f9f-825a-1b70bb4ca014.png",
+            "https://cl.imagineapi.dev/assets/68c68076-cce8-4ea3-a5c8-15aaaa2ce3e6/68c68076-cce8-4ea3-a5c8-15aaaa2ce3e6.png"
         ],
         "upscaled": [
             "00200514-7de4-4f4a-a621-7e8fb892146a",

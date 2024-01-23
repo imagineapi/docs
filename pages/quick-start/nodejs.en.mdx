@@ -19,7 +19,7 @@ The best part is that you can copy the code and use it right away!
 
 ![Animation of steps to generate an authentication token](/authentication.gif)
 
- 1. Once you buy a [demo account](https://www.imagineapi.dev/pricing), you will receive an email username and password. Use that to log into our demo server: [https://demo.imagineapi.dev](https://demo.imagineapi.dev).
+ 1. Once you buy a [demo account](https://www.imagineapi.dev/pricing), you will receive an email username and password. Use that to log into our demo server: [https://cl.imagineapi.dev](https://cl.imagineapi.dev).
  1. After you log in, click your `user icon` on the bottom left: ![user icon screenshot for ImagineAPI](/authentication-token.png)
  1. These are you user settings. Scroll to the bottom and find the `Token` field and `click the round arrow button` to regenerate the token: ![](/authentication-click-regenerate.png)
  1. This will create a new token that you can use to authorize your API call with, so `copy the token`. You will be using this shortly so keep it around in a file somewhere.: ![](/authentication-copy-token.png)
@@ -41,7 +41,7 @@ const data = {
 // we wrap it in a main function here so we can use async/await inside of it.
 async function main() {
     try {
-        const response = await fetch('https://demo.imagineapi.dev/items/images/', {
+        const response = await fetch('https://cl.imagineapi.dev/items/images/', {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: remember to change this
@@ -113,7 +113,7 @@ const imageId = '7f360434-675f-4abb-8cca-1ca0bca6f1a6'; // <<< TODO: change this
 
 async function main() {
   try {
-    const response = await fetch(`https://demo.imagineapi.dev/items/images/${imageId}`, {
+    const response = await fetch(`https://cl.imagineapi.dev/items/images/${imageId}`, {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: remember to change this
@@ -153,13 +153,13 @@ And if the image finished generating, this is the results we get:
     date_created: '2023-09-01T03:30:34.094Z',
     status: 'completed',
     progress: null,
-    url: 'https://demo.imagineapi.dev/assets/1f662f4e-e0f1-4e0f-a6a4-30eac3865ab5/1f662f4e-e0f1-4e0f-a6a4-30eac3865ab5.png',
+    url: 'https://cl.imagineapi.dev/assets/1f662f4e-e0f1-4e0f-a6a4-30eac3865ab5/1f662f4e-e0f1-4e0f-a6a4-30eac3865ab5.png',
     error: null,
     upscaled_urls: [
-      'https://demo.imagineapi.dev/assets/c77e1a16-c3e2-4ea6-b9d7-ab571644d080/c77e1a16-c3e2-4ea6-b9d7-ab571644d080.png',
-      'https://demo.imagineapi.dev/assets/018aa788-c140-4851-8c88-5297fe9186c9/018aa788-c140-4851-8c88-5297fe9186c9.png',
-      'https://demo.imagineapi.dev/assets/2cfcfa5c-ae91-4921-877a-0366ce4b68da/2cfcfa5c-ae91-4921-877a-0366ce4b68da.png',
-      'https://demo.imagineapi.dev/assets/83ef688b-a6a7-46c7-8cb7-756f833037cb/83ef688b-a6a7-46c7-8cb7-756f833037cb.png'
+      'https://cl.imagineapi.dev/assets/c77e1a16-c3e2-4ea6-b9d7-ab571644d080/c77e1a16-c3e2-4ea6-b9d7-ab571644d080.png',
+      'https://cl.imagineapi.dev/assets/018aa788-c140-4851-8c88-5297fe9186c9/018aa788-c140-4851-8c88-5297fe9186c9.png',
+      'https://cl.imagineapi.dev/assets/2cfcfa5c-ae91-4921-877a-0366ce4b68da/2cfcfa5c-ae91-4921-877a-0366ce4b68da.png',
+      'https://cl.imagineapi.dev/assets/83ef688b-a6a7-46c7-8cb7-756f833037cb/83ef688b-a6a7-46c7-8cb7-756f833037cb.png'
     ],
     upscaled: [
       '018aa788-c140-4851-8c88-5297fe9186c9',
@@ -189,7 +189,7 @@ async function main() {
     let promptResponseData;
     // generate the image
     try {
-        const response = await fetch('https://demo.imagineapi.dev/items/images/', {
+        const response = await fetch('https://cl.imagineapi.dev/items/images/', {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: remember to change this
@@ -210,7 +210,7 @@ async function main() {
     const intervalId = setInterval(async function () {
         try {
           console.log('Checking image details');
-          const response = await fetch(`https://demo.imagineapi.dev/items/images/${promptResponseData.data.id}`, {
+          const response = await fetch(`https://cl.imagineapi.dev/items/images/${promptResponseData.data.id}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer u667iLDO2Xfu0-qpv_nu82EeeDtYGlsf', // <<<< TODO: remember to change this
@@ -284,13 +284,13 @@ Completed image detials {
   date_created: '2023-09-01T04:41:18.102Z',
   status: 'completed',
   progress: null,
-  url: 'https://demo.imagineapi.dev/assets/b5d1542e-e4a0-4f47-8f61-d9961e7a45f5/b5d1542e-e4a0-4f47-8f61-d9961e7a45f5.png',
+  url: 'https://cl.imagineapi.dev/assets/b5d1542e-e4a0-4f47-8f61-d9961e7a45f5/b5d1542e-e4a0-4f47-8f61-d9961e7a45f5.png',
   error: null,
   upscaled_urls: [
-    'https://demo.imagineapi.dev/assets/e58eaa77-e5c4-480a-a183-674f139f6591/e58eaa77-e5c4-480a-a183-674f139f6591.png',
-    'https://demo.imagineapi.dev/assets/aa7571cb-eb58-4500-911c-77470e0d6032/aa7571cb-eb58-4500-911c-77470e0d6032.png',
-    'https://demo.imagineapi.dev/assets/82a8c1f3-664b-438b-befb-9c9fefb1aa73/82a8c1f3-664b-438b-befb-9c9fefb1aa73.png',
-    'https://demo.imagineapi.dev/assets/226b80ef-8c42-4c7d-910d-ffd8ea546647/226b80ef-8c42-4c7d-910d-ffd8ea546647.png'
+    'https://cl.imagineapi.dev/assets/e58eaa77-e5c4-480a-a183-674f139f6591/e58eaa77-e5c4-480a-a183-674f139f6591.png',
+    'https://cl.imagineapi.dev/assets/aa7571cb-eb58-4500-911c-77470e0d6032/aa7571cb-eb58-4500-911c-77470e0d6032.png',
+    'https://cl.imagineapi.dev/assets/82a8c1f3-664b-438b-befb-9c9fefb1aa73/82a8c1f3-664b-438b-befb-9c9fefb1aa73.png',
+    'https://cl.imagineapi.dev/assets/226b80ef-8c42-4c7d-910d-ffd8ea546647/226b80ef-8c42-4c7d-910d-ffd8ea546647.png'
   ],
   upscaled: [
     '226b80ef-8c42-4c7d-910d-ffd8ea546647',
