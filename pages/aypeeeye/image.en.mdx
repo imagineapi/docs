@@ -4,7 +4,13 @@ All methods required to provide an [authorization token](/API/authentication).
 
 ## `GET /items/images/:id`
 
-Returns: 
+For ImagineAPI.dev Cloud, full endpoint is (replace `:id` with the actual image ID):
+
+```text copy
+https://cl.imagineapi.dev/items/images/:id
+```
+
+### Returns: 
 
 ```json
 {
@@ -26,13 +32,20 @@ Returns:
 
 ## `POST /items/images`
 
-Body: 
+For ImagineAPI.dev Cloud, full endpoint is:
+
+```text copy
+https://cl.imagineapi.dev/items/images
+```
+
+
+### Body: 
 
 ```
 {"prompt": string}
 ```
 
-Returns:
+### Returns:
 
 ```json
 {
