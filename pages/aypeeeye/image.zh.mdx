@@ -1,67 +1,87 @@
-// image.zh.mdx:
+import { Callout } from 'nextra/components'
+
 
 # 图像
 
-提供所有方法来提供一个[验证令牌](/API/authentication)。
+所有方法都需要提供一个[授权令牌](/API/authentication)。
 
 ## `GET /items/images/:id`
 
-对于 ImagineAPI.dev 云服务，完整的端点地址是（将 :id 替换为实际的图像 ID）：
+对于 ImagineAPI.dev 云，完整端点为（将 `:id` 替换为实际的图像 ID）：
 
 ```text copy
 https://cl.imagineapi.dev/items/images/:id
 ```
 
-### 返回： 
+<Callout type="warning">
+如果 `cl.imagineapi.dev` 出现超时或者无法工作，请通过微信[联系我们](https://imagineapi.dev/zh/contact)，将会有 帮助您解决任何障碍。
+</Callout>
+
+### 返回内容：
 
 ```json
 {
     "data": {
         "id": UUID,
-        "prompt": 字符串,
-        "results": 无 | 字符串,
-        "user_created": 字符串,
-        "date_created": 字符串,
+        "prompt": string,
+        "results": null | string,
+        "user_created": string,
+        "date_created": string,
         "status": "pending" | "in-progress" | "completed" | "failed",
-        "progress": 数字 | 无, 
-        "url": 无 | 字符串,
-        "error": 无 | 字符串,
-        "upscaled_urls": 无 | 字符串[],
-        "upscaled": 字符串[]
+        "progress": number | null,
+        "url": null | string,
+        "error": null | string,
+        "upscaled_urls": null | string[],
+        "upscaled": string[],
+        "ref": string | null,
     }
 }
 ```
 
 ## `POST /items/images`
 
-对于 ImagineAPI.dev 云服务，完整的端点地址是：
+对于 ImagineAPI.dev 云，完整端点是：
 
 ```text copy
 https://cl.imagineapi.dev/items/images
 ```
 
-### 请求体： 
+<Callout type="warning">
+如果 `cl.imagineapi.dev` 出现超时或者无法工作，请通过微信[联系我们](https://imagineapi.dev/zh/contact)，将会有 帮助您解决任何障碍。
+</Callout>
+
+
+
+### 主体内容：
 
 ```
-{"prompt": 字符串}
+{
+  "prompt": string,
+  "ref": string | null,
+}
 ```
 
-### 返回：
+#### 注释：
+- `prompt` 可以是任何 [Midjourney 提示参数](https://docs.midjourney.com/docs/prompts) 支持的值，包括图像网址。
+- `ref` 可以设置为您选择的值。如果您的内部系统中已经有 ID，这是跟踪您的图像的好方法。特别适用于[webhooks](./webhooks)。
+
+### 返回内容：
 
 ```json
 {
     "data": {
         "id": UUID,
-        "prompt": 字符串,
-        "results": 无 | 字符串,
-        "user_created": 字符串,
-        "date_created": 字符串,
+        "prompt": string,
+        "results": null | string,
+        "user_created": string,
+        "date_created": string,
         "status": "pending" | "in-progress" | "completed" | "failed",
-        "progress": 数字 | 无,
-        "url": 无 | 字符串,
-        "error": 无 | 字符串,
-        "upscaled_urls": 无 | 字符串[],
-        "upscaled": 字符串[]
+        "progress": number | null,
+        "url": null | string,
+        "error": null | string,
+        "upscaled_urls": null | string[],
+        "upscaled": string[],
+        "ref": string | null,
     }
 }
 ```

@@ -10,7 +10,7 @@ For ImagineAPI.dev Cloud, full endpoint is (replace `:id` with the actual image 
 https://cl.imagineapi.dev/items/images/:id
 ```
 
-### Returns: 
+### Returns:
 
 ```json
 {
@@ -21,11 +21,12 @@ https://cl.imagineapi.dev/items/images/:id
         "user_created": string,
         "date_created": string,
         "status": "pending" | "in-progress" | "completed" | "failed",
-        "progress": number | null, 
+        "progress": number | null,
         "url": null | string,
         "error": null | string,
         "upscaled_urls": null | string[],
-        "upscaled": string[]
+        "upscaled": string[],
+        "ref": string | null,
     }
 }
 ```
@@ -39,11 +40,18 @@ https://cl.imagineapi.dev/items/images
 ```
 
 
-### Body: 
+### Body:
 
 ```
-{"prompt": string}
+{
+  "prompt": string,
+  "ref": string | null,
+}
 ```
+
+#### Notes:
+- `prompt` can be any value supported by [Midjourney prompt paramter](https://docs.midjourney.com/docs/prompts), including image urls.
+- `ref` can be set to a value of your choosing. It's good way to keep track of your images if you already have an ID in your internal system. Useful especially for [webhooks](./webhooks).
 
 ### Returns:
 
@@ -56,11 +64,12 @@ https://cl.imagineapi.dev/items/images
         "user_created": string,
         "date_created": string,
         "status": "pending" | "in-progress" | "completed" | "failed",
-        "progress": number | null, 
+        "progress": number | null,
         "url": null | string,
         "error": null | string,
         "upscaled_urls": null | string[],
-        "upscaled": string[]
+        "upscaled": string[],
+        "ref": string | null,
     }
 }
 ```

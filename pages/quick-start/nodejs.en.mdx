@@ -61,6 +61,11 @@ async function main() {
 main();
 ```
 
+<Callout type="warning">
+如果 `cl.imagineapi.dev` 出现超时或者无法工作，请通过微信[联系我们](https://imagineapi.dev/zh/contact)，将会有 帮助您解决任何障碍。
+</Callout>
+
+
 We run it using (Node.js 18 or higher is required):
 
 ```shell
@@ -86,7 +91,8 @@ The output will look like this:
     url: null,
     error: null,
     upscaled_urls: null,
-    upscaled: []
+    upscaled: [],
+    ref: null,
   }
 }
 ```
@@ -166,7 +172,8 @@ And if the image finished generating, this is the results we get:
       '2cfcfa5c-ae91-4921-877a-0366ce4b68da',
       '83ef688b-a6a7-46c7-8cb7-756f833037cb',
       'c77e1a16-c3e2-4ea6-b9d7-ab571644d080'
-    ]
+    ],
+    ref: null
   }
 }
 ```
@@ -252,7 +259,8 @@ Here's how the output might look like:
     url: null,
     error: null,
     upscaled_urls: null,
-    upscaled: []
+    upscaled: [],
+    ref: null
   }
 }
 Checking image details
@@ -297,7 +305,8 @@ Completed image detials {
     '82a8c1f3-664b-438b-befb-9c9fefb1aa73',
     'aa7571cb-eb58-4500-911c-77470e0d6032',
     'e58eaa77-e5c4-480a-a183-674f139f6591'
-  ]
+  ],
+  ref: null
 }
 
 ```
@@ -307,4 +316,3 @@ And here's what `upscaled_urls` look like:
 
 
 </Steps>
-

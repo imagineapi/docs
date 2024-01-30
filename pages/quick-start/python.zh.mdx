@@ -76,8 +76,14 @@ Python 3.11.5
               'upscaled': [],
               'upscaled_urls': None,
               'url': None,
-              'user_created': '126353b1-2c3e-42af-9597-b141c0e50fae'}}
+              'user_created': '126353b1-2c3e-42af-9597-b141c0e50fae',
+              'ref': None}}
 ```
+
+<Callout type="warning">
+如果 `cl.imagineapi.dev` 出现超时或者无法工作，请通过微信[联系我们](https://imagineapi.dev/zh/contact)，将会有 帮助您解决任何障碍。
+</Callout>
+
 
 现在您的提示将被发送到Midjourney。
 
@@ -147,7 +153,8 @@ $ python3 get_image.py
           'upscaled': ['05f05786-af1a-497e-9a7e-d0aa2add04a7',
                        '20984abb-a4a1-4376-b622-178ade59af14',
                        'c1f1be14-dcb8-4d34-9e4f-3e7fa9e58187',
-                       'd82b5c66-7eca-406f-a210-cb645f06c936']}}
+                       'd82b5c66-7eca-406f-a210-cb645f06c936'],
+          'ref': None}}
 ```
 
 这很好，但如果脚本能自动检查图片并在完成后显示给我们就更好了。
@@ -242,7 +249,8 @@ while not check_image_status():
  'upscaled': ['14b88d32-cc87-4029-91fd-574ff8ea0d2c',
               '9977909f-2f1b-421e-8c6e-deca1aea4059',
               'e4bc0749-c968-4178-9f27-7445412ee0b4',
-              'fb51a55e-1d3e-43bd-9622-61bfba69a342']}
+              'fb51a55e-1d3e-43bd-9622-61bfba69a342'],
+ 'ref': None}
 ```
 
 `upscaled_urls` 的样子如下：

@@ -45,6 +45,7 @@ Here's how it looks:
     "error": null | string,
     "upscaled_urls": null | string[],
     "upscaled": string[],
+    "ref": string | null,
   }
 }
 ```
@@ -69,7 +70,8 @@ For example:
         "url": "https://cl.imagineapi.dev/assets/9be5e217-8892-4338-a08c-f906e3ee8697/9be5e217-8892-4338-a08c-f906e3ee8697.webp",
         "error": null,
         "upscaled_urls": null,
-        "upscaled": []
+        "upscaled": [],
+        "ref": string | null,
     }
 }
 ```
@@ -106,7 +108,8 @@ Once the image is generated, you will receive a new webhook with `status: comple
             "6c75d047-7b36-402a-a356-44ce1aed5afe",
             "762f4faa-1cda-4858-ac54-bdadf7ecf51e",
             "cc6591c0-0327-47dd-bb4c-911ffbfc1981"
-        ]
+        ],
+        "ref": null,
     }
 }
 ```

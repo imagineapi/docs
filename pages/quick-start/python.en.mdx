@@ -76,7 +76,8 @@ The output will look like this:
               'upscaled': [],
               'upscaled_urls': None,
               'url': None,
-              'user_created': '126353b1-2c3e-42af-9597-b141c0e50fae'}}
+              'user_created': '126353b1-2c3e-42af-9597-b141c0e50fae',
+              'ref': None}}
 ```
 
 Now your prompt will be sent to Midjourney.
@@ -148,7 +149,8 @@ The expected output when the image has finished generating:
           'upscaled': ['05f05786-af1a-497e-9a7e-d0aa2add04a7',
                        '20984abb-a4a1-4376-b622-178ade59af14',
                        'c1f1be14-dcb8-4d34-9e4f-3e7fa9e58187',
-                       'd82b5c66-7eca-406f-a210-cb645f06c936']}}
+                       'd82b5c66-7eca-406f-a210-cb645f06c936'],
+          'ref': None}}
 ```
 
 This is great, but it would be nice to have the script automatically check the image and show us when it's done.
@@ -212,7 +214,8 @@ Here's how the output might look like:
           'url': None,
           'error': None,
           'upscaled_urls': None,
-          'upscaled': []}}
+          'upscaled': [],
+          'ref': None}}
 Image is not finished generation. Status: pending
 Image is not finished generation. Status: pending
 Image is not finished generation. Status: pending
@@ -240,11 +243,11 @@ Completed image details
  'upscaled': ['62c701f6-a7c7-4825-ac7f-5ed292c411f9',
               'c3fa377d-7eb1-468a-bd66-40a5da42ea76',
               'f40c11b4-ed64-4bb4-bf82-3e80039c9ed2',
-              'fccd79d5-3a1f-4756-b54c-98f23e390ab0']}
+              'fccd79d5-3a1f-4756-b54c-98f23e390ab0'],
+ 'ref': None}
 ```
 
 And here's what `upscaled_urls` look like:
 ![auto upscaled Midjourney image](/upscaled-results-python.png)
 
 </Steps>
-
