@@ -13,7 +13,7 @@ import Image from 'next/image'
 <Tab>
 ```sh
 curl --request POST \
-  --url http://example.com/items/images/ \
+  --url http://cl.imagineapi.dev/items/images/ \
   --header 'Authorization: Bearer <TokenID>' \
   --header 'Content-Type: application/json' \
   --data '{"prompt": "Cinematic Portrait, GodlyBeautiful french supermodel, dynamic lighting, [light + space of James Turrell + Bauhaus architectural forms], BeautyCore, Sharp Details --ar 21:9 --style raw"}'
@@ -27,7 +27,7 @@ const data = {
   prompt: "Cinematic Portrait, GodlyBeautiful french supermodel, dynamic lighting, [light + space of James Turrell + Bauhaus architectural forms], BeautyCore, Sharp Details --ar 21:9 --style raw"
 };
 
-axios.post('http://example.com/items/images/', data, {
+axios.post('http://cl.imagineapi.dev/items/images/', data, {
   headers: {
     'Authorization': 'Bearer <TokenID>',
     'Content-Type': 'application/json'
@@ -46,7 +46,7 @@ require 'vendor/autoload.php';
 use GuzzleHttp\Client;
 
 $client = new Client([
-  'headers' => [ 
+  'headers' => [
     'Authorization' => 'Bearer <TokenID>',
     'Content-Type' => 'application/json'
   ]
@@ -56,7 +56,7 @@ $data = [
   'prompt' => 'Cinematic Portrait, GodlyBeautiful french supermodel, dynamic lighting, [light + space of James Turrell + Bauhaus architectural forms], BeautyCore, Sharp Details --ar 21:9 --style raw'
 ];
 
-$response = $client->post('http://example.com/items/images/', [
+$response = $client->post('http://cl.imagineapi.dev/items/images/', [
   'json' => $data
 ]);
 
@@ -67,7 +67,7 @@ echo $response->getBody();
 ```python
 import requests
 
-url = "http://example.com/items/images/"
+url = "http://cl.imagineapi.dev/items/images/"
 payload = {
   "prompt": "Cinematic Portrait, GodlyBeautiful french supermodel, dynamic lighting, [light + space of James Turrell + Bauhaus architectural forms], BeautyCore, Sharp Details --ar 21:9 --style raw"
 }
@@ -102,7 +102,7 @@ class Program
 
     client.DefaultRequestHeaders.Add("Authorization", "Bearer <TokenID>");
 
-    var response = await client.PostAsync("http://example.com/items/images/", payload);
+    var response = await client.PostAsync("http://cl.imagineapi.dev/items/images/", payload);
 
     var responseString = await response.Content.ReadAsStringAsync();
 
@@ -121,7 +121,7 @@ import java.io.InputStreamReader;
 
 public class Main {
   public static void main(String[] args) throws Exception {
-    URL url = new URL ("http://example.com/items/images/");
+    URL url = new URL ("http://cl.imagineapi.dev/items/images/");
     HttpURLConnection conn = (HttpURLConnection)url.openConnection();
     conn.setRequestMethod("POST");
     conn.setRequestProperty("Authorization", "Bearer <TokenID>");

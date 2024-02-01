@@ -1,6 +1,7 @@
 {
   "index": "简介",
   "quick-start": "快速入门",
+  "guides": "指南",
   "aypeeeye": "API",
   "midjourney-help": "Midjourney Help",
   "self-host-install": "自托管安装",
@@ -15,9 +16,8 @@
     "href": "https://www.imagineapi.dev/changelog"
   },
   "contact": {
-    "title": "联系我们 ↗",
+    "title": "联系我们",
     "type": "page",
-    "href": "https://www.imagineapi.dev/contact",
-    "newWindow": true
+    "href": "https://www.imagineapi.dev/contact"
   }
 }

@@ -1,6 +1,7 @@
 {
   "index": "Introduction",
   "quick-start": "Quick Start",
+  "guides": "Guides",
   "aypeeeye": "API Reference",
   "midjourney-help": "Midjourney Help",
   "self-host-install": "Self-host Install",
@@ -15,9 +16,8 @@
     "href": "https://www.imagineapi.dev/changelog"
   },
   "contact": {
-    "title": "Contact ↗",
+    "title": "Contact",
     "type": "page",
-    "href": "https://www.imagineapi.dev/contact",
-    "newWindow": true
+    "href": "https://www.imagineapi.dev/contact"
   }
 }
