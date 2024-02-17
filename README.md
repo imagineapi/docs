@@ -1,43 +1,30 @@
 # ImagineAPI Docs - The Midjourney API 
 
-Welcome to the ImagineAPI Docs! This documentation provides comprehensive information about our Midjourney API. 
+Welcome to the ImagineAPI Docs! This documentation provides information about our Midjourney API. 
 
-Check us out at: https://www.imagineapi.dev/
+We generate AI images from text and image prompts via our API for MidJourney, with no-code integrations & user-friendly REST API.
+
+Discover more about us at [ImagineAPI](https://www.imagineapi.dev/)
+
 
 ![ImagineAPI Docs](https://github.com/imagineapi/docs/assets/76411744/9644df2c-ed79-4ea0-8b37-849adc64a456)
 
-## Features
+## Table of Content  
 
 1. Introduction
-2. Quick Start
-    - Using our Midjourney API with JavaScript (Node.js)
-    - Using our Midjourney API with PHP
-    - Using our Midjourney API with Python
-3. Guides
-    - Blending Multiple Images — Using Midjourney's /blend Command
-    - Upscaling Midjourney Image 1x — 1024x1024
-    - Upscaling Midjourney Image 2x — 2048x2048
-    - Upscaling Midjourney Image 4x — 4096x4096
-    - Variations Midjourney Image
-4. API Reference
-    - Authentication
-    - Image
-    - Webhooks
-    - Status
-5. Midjourney Help
-    - Accepting Midjourney's Terms of Services
+2. Quick Start Guides - Tutorials to get you started using our Midjourney API with JavaScript (Node.js), PHP, and Python.
+3. Guides -  More detailed documentation on specific features, such as:
+    - Blending multiple images using Midjourney’s /blend command.
+	- Upscaling Midjourney images to varying resolutions (1x — 1024x1024, 2x — 2048x2048, and 4x — 4096x4096).
+	- Creating different variations of Midjourney images
+4. API Reference - Thorough API endpoint documentation covering authentication, image manipulation, webhooks, and status checking.
+5. Midjourney Help - Support and guidance, including how to accept Midjourney’s Terms of Service.
 6. Self-host Install
     - Installing ImagineAPI.dev — the unofficial Midjourney API on your server
     - Create a Discord Server and Bot
     - Installing ImagineAPI
     - Upgrading ImagineAPI
     - Troubleshooting
-
-## Local Development
-
-First, run `pnpm i` to install the dependencies.
-
-Then, run `pnpm dev` to start the development server and visit localhost:3000. 
 
 ## License
 
