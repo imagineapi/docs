@@ -53,7 +53,7 @@ const config: DocsThemeConfig = {
         return {
             description:
                 frontMatter.description ||
-                "The MidJourney API (unofficial) Documentation",
+                "Dive into the ImagineAPI documentation to integrate the MidJourney API into your projects and generate Midjourney images.",
             openGraph: {
                 images: [
                     {
@@ -63,11 +63,13 @@ const config: DocsThemeConfig = {
                     },
                 ],
                 url: "https://docs.imagineapi.dev",
+                type: "website",
             },
             titleTemplate: "%s – ImagineAPI.dev Documentation",
             twitter: {
                 cardType: "summary_large_image",
                 site: "https://docs.imagineapi.dev",
+                handle: "@midjourneyapi",
             },
         };
     },

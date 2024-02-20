@@ -32,7 +32,7 @@ module.exports = withNextra({
             destination: "/self-host-install/upgrade",
             permanent: true,
         },
-        // reditect all .en
+        // redirect all .en
         {
             source: "/:slug*.en",
             destination: "/:slug*",
@@ -41,6 +41,12 @@ module.exports = withNextra({
         //redirect all .zh to /zh/
         {
             source: "/:slug*.zh",
+            destination: "/:slug*",
+            permanent: true,
+        },
+        // redirect all /en/ urls
+        {
+            source: "/en/:slug*",
             destination: "/:slug*",
             permanent: true,
         },
