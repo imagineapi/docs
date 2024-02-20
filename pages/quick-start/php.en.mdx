@@ -1,5 +1,5 @@
-import { Callout, Tab, Tabs, Steps } from 'nextra/components'
-
+import { Callout, Tab, Tabs, Steps } from "nextra/components";
+import Image from "next/image";
 
 # Using our Midjourney API with PHP
 
@@ -10,7 +10,8 @@ This guide assumes you're using a [demo account](https://www.imagineapi.dev/pric
 The best part is that you can copy the code and use it right away!
 
 <Callout type="info" emoji="🚀">
-**The easiest to start generating Midjourney images via API is by getting a  [demo account](https://www.imagineapi.dev/pricing).**
+    **The easiest to start generating Midjourney images via API is by getting a
+    [demo account](https://www.imagineapi.dev/pricing).**
 </Callout>
 
 <Steps>
@@ -19,11 +20,11 @@ The best part is that you can copy the code and use it right away!
 
 ![Animation of steps to generate an authentication token](/authentication.gif)
 
- 1. Once you buy a [demo account](https://www.imagineapi.dev/pricing), you will receive an email username and password. Use that to log into our demo server: [https://cl.imagineapi.dev](https://cl.imagineapi.dev).
- 1. After you log in, click your `user icon` on the bottom left: ![user icon screenshot for ImagineAPI](/authentication-token.png)
- 1. These are you user settings. Scroll to the bottom and find the `Token` field and `click the round arrow button` to regenerate the token: ![](/authentication-click-regenerate.png)
- 1. This will create a new token that you can use to authorize your API call with, so `copy the token`. You will be using this shortly so keep it around in a file somewhere.: ![](/authentication-copy-token.png)
- 1. Then `click the checkbox button` on the top right to save your account changes: ![save account details for token](/authentication-save-account-changes.png)
+1.  Once you buy a [demo account](https://www.imagineapi.dev/pricing), you will receive an email username and password. Use that to log into our demo server: [https://cl.imagineapi.dev](https://cl.imagineapi.dev).
+1.  After you log in, click your `user icon` on the bottom left: ![user icon screenshot for ImagineAPI](/authentication-token.png)
+1.  These are you user settings. Scroll to the bottom and find the `Token` field and `click the round arrow button` to regenerate the token: ![](/authentication-click-regenerate.png)
+1.  This will create a new token that you can use to authorize your API call with, so `copy the token`. You will be using this shortly so keep it around in a file somewhere.: ![](/authentication-copy-token.png)
+1.  Then `click the checkbox button` on the top right to save your account changes: ![save account details for token](/authentication-save-account-changes.png)
 
 That's all. Now we will use the token to authenticate our API calls.
 
@@ -98,9 +99,9 @@ Now your prompt will be sent to Midjourney.
 
 A few important details to note:
 
-- The image `id` will remain the same and we can use it to get the data and status of it
-- `status` is `pending` which is the default when an image generation is first created
-- when it's done generating (`status` will be `completed`), `upscaled_urls` will have 4 separate image urls and `url` will have one grid image that has all four images in it
+-   The image `id` will remain the same and we can use it to get the data and status of it
+-   `status` is `pending` which is the default when an image generation is first created
+-   when it's done generating (`status` will be `completed`), `upscaled_urls` will have 4 separate image urls and `url` will have one grid image that has all four images in it
 
 Let's continue below and [get the images that got generated](#getting-the-generated-image).
 
@@ -302,8 +303,13 @@ Image is not finished generation. Status: in-progress
 }
 ```
 
-
 And here's what `upscaled_urls` look like:
-![auto upscaled Midjourney image with PHP](/upscaled-results-php.png)
+
+<Image
+    src="/upscaled-results-php.png"
+    width={800}
+    height={500}
+    alt="auto upscaled Midjourney image with PHP"
+/>
 
 </Steps>
