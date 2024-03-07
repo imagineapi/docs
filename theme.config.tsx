@@ -38,6 +38,8 @@ const config: DocsThemeConfig = {
                 name="twitter:image"
                 content="https://docs.imagineapi.dev/social.png"
             />
+            <meta name="twitter:site" content="https://docs.imagineapi.dev" />
+            <meta name="twitter:creator" content="@midjourneyapi" />
             <link rel="icon" type="image/png" href="/favicon.png" />
             {/** @ts-ignore */}
             <script
@@ -66,11 +68,6 @@ const config: DocsThemeConfig = {
                 type: "website",
             },
             titleTemplate: "%s – ImagineAPI.dev Documentation",
-            twitter: {
-                cardType: "summary_large_image",
-                site: "https://docs.imagineapi.dev",
-                handle: "@midjourneyapi",
-            },
         };
     },
     i18n: [
