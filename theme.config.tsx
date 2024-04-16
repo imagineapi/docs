@@ -37,13 +37,6 @@ const config: DocsThemeConfig = {
       <meta name="twitter:creator" content="@midjourneyapi" />
       <link rel="icon" type="image/png" href="/favicon.png" />
       {/** @ts-ignore */}
-      <script
-        type="text/javascript"
-        dangerouslySetInnerHTML={{
-          __html:
-            'window.$crisp=[];window.CRISP_WEBSITE_ID="9c996c4e-93b4-4ff2-bcd5-5407f5b2de0e";(function(){d = document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();',
-        }}
-      ></script>
       {/** rewardful start */}
       <script
         type="text/javascript"
