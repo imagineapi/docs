@@ -19,7 +19,7 @@ const data = {
     prompt: "https://i.imgur.com/4Bom9qR.png https://i.imgur.com/CMAbAEz.png"
 };
 
-axios.post('http://cl.imagineapi.dev/items/images/', data, {
+axios.post('https://cl.imagineapi.dev/items/images/', data, {
     headers: {
         'Authorization': 'Bearer <TokenID>',
         'Content-Type': 'application/json'
@@ -48,7 +48,7 @@ $data = [
     'prompt' => 'https://i.imgur.com/4Bom9qR.png https://i.imgur.com/CMAbAEz.png'
 ];
 
-$response = $client->post('http://cl.imagineapi.dev/items/images/', [
+$response = $client->post('https://cl.imagineapi.dev/items/images/', [
     'json' => $data
 ]);
 
@@ -59,7 +59,7 @@ echo $response->getBody();
 ```python
 import requests
 
-url = "http://cl.imagineapi.dev/items/images/"
+url = "https://cl.imagineapi.dev/items/images/"
 payload = {
     "prompt": "https://i.imgur.com/4Bom9qR.png https://i.imgur.com/CMAbAEz.png"
 }
@@ -76,7 +76,7 @@ print(response.text)
 <Tab>
 ```sh
 curl --request POST \
-  --url http://cl.imagineapi.dev/items/images/ \
+  --url https://cl.imagineapi.dev/items/images/ \
   --header 'Authorization: Bearer <TokenID>' \
   --header 'Content-Type: application/json' \
   --data '{"prompt": "https://i.imgur.com/4Bom9qR.png https://i.imgur.com/CMAbAEz.png https://i.imgur.com/MApxjLz.png"}'
